@@ -39,14 +39,40 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, user, router]);
 
-  // Initialize Google Sign-In
+  // Initialize Google Sign-In with script load listener / interval fallback
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.google) {
-      window.google.accounts.id.initialize({
-        client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '',
-        callback: handleGoogleCallback,
-      });
-    }
+    const initGoogle = () => {
+      if (typeof window !== 'undefined' && window.google?.accounts?.id) {
+        const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+        if (!clientId) {
+          return;
+        }
+        try {
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+
+          const container = document.getElementById('googleRenderContainer');
+          if (container && container.childElementCount === 0) {
+            window.google.accounts.id.renderButton(container, {
+              theme: 'outline',
+              size: 'large',
+              width: 320,
+              text: 'continue_with',
+            });
+          }
+        } catch (err) {
+          console.error('Google accounts initialization error:', err);
+        }
+      }
+    };
+
+    initGoogle();
+    const interval = setInterval(initGoogle, 500);
+    return () => clearInterval(interval);
   }, []);
 
   const {
@@ -266,6 +292,9 @@ export default function LoginPage() {
           )}
         </button>
 
+        {/* Google Render Container & Fallback Button */}
+        <div id="googleRenderContainer" className="flex justify-center w-full min-h-[44px]"></div>
+        
         {/* Google Sign-In Hidden Component */}
         <div id="g_id_onload" data-client_id={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID} data-callback="handleGoogleCallback" style={{ display: 'none' }}></div>
         <div id="g_id_signin" data-type="standard" style={{ display: 'none' }}></div>
