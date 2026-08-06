@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useAbout } from '../../context/AboutContext';
 import { useConfig } from '../../context/ConfigContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileDown, ArrowRight, Mail, MapPin, Eye, Globe, X, Briefcase, GitBranch, MessageCircle } from 'lucide-react';
+import { FileDown, FileText, ArrowRight, Mail, MapPin, Eye, Globe, X, Briefcase, GitBranch, MessageCircle } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaYoutube, FaInstagram, FaGlobe } from 'react-icons/fa';
 import { SiMedium } from 'react-icons/si';
 import Link from 'next/link';
@@ -186,78 +186,131 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
               )}
             </div>
 
-            {/* Actions */}
-            <div className="pt-6 flex flex-wrap gap-4">
+            {/* Actions & Resume Button */}
+            <div className="pt-6 flex flex-wrap items-center gap-4">
+              {/* Primary Resume / CV Button */}
+              <button
+                onClick={() => setIsResumeModalOpen(true)}
+                className="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 shadow-xl shadow-blue-500/25 dark:shadow-blue-900/40 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 transform border border-blue-400/30 cursor-pointer group"
+              >
+                <div className="relative flex items-center justify-center">
+                  <FileText className="h-5 w-5 text-blue-100 group-hover:scale-110 transition-transform" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-blue-700 animate-pulse" />
+                </div>
+                <span className="tracking-wide">Resume</span>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-white/20 text-white tracking-widest font-mono">CV</span>
+              </button>
+
+              {/* Secondary Read Full Story Button */}
               <Link
                 href="/about"
-                className="inline-flex items-center space-x-2.5 px-6 py-3 rounded-xl font-bold bg-white dark:bg-slate-800 text-[#0F172A] dark:text-white border border-[#E2E8F0] dark:border-slate-700 hover:border-[#2563EB] dark:hover:border-blue-500 hover:text-[#2563EB] dark:hover:text-blue-400 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-sm cursor-pointer"
+                className="inline-flex items-center space-x-2.5 px-7 py-3.5 rounded-2xl font-bold bg-white/80 dark:bg-slate-800/80 backdrop-blur-md text-slate-800 dark:text-white border border-slate-200/80 dark:border-slate-700/80 hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 shadow-md shadow-slate-200/50 dark:shadow-none cursor-pointer group"
               >
                 <span>Read Full Story</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 text-blue-500 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              {basic.resumeUrl && (
-                <button
-                  onClick={() => setIsResumeModalOpen(true)}
-                  className="inline-flex items-center space-x-2.5 px-6 py-3 rounded-xl font-bold text-white bg-[#2563EB] hover:bg-[#1D4ED8] dark:bg-blue-600 dark:hover:bg-blue-500 shadow-lg shadow-blue-500/20 dark:shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-                >
-                  <FileDown className="h-4 w-4" />
-                  <span>রিজিউমি</span>
-                </button>
-              )}
+              {/* Get In Touch Button */}
+              <a
+                href="#contact"
+                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-2xl font-bold bg-emerald-500/10 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span>Get In Touch</span>
+              </a>
             </div>
           </motion.div>
         </div>
       </div>
 
-      {/* Resume Modal */}
+      {/* Interactive Resume Preview & Download Modal */}
       <AnimatePresence>
         {isResumeModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative border border-slate-200 dark:border-slate-700"
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-6 max-h-[90vh] flex flex-col"
             >
-              <button
-                onClick={() => setIsResumeModalOpen(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-700 rounded-full transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileDown className="h-6 w-6" />
+              {/* Modal Header */}
+              <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-2xl border border-blue-500/20">
+                    <FileText className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+                      <span>Curriculum Vitae / Resume</span>
+                      <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                        Official PDF
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">
+                      {basic.fullName} • {basic.tagline}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">Resume Options</h3>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-2">Would you like to view my resume in browser or download it directly?</p>
+
+                <button
+                  onClick={() => setIsResumeModalOpen(false)}
+                  className="p-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
 
-              <div className="grid grid-cols-1 gap-3">
-                <a 
-                  href={basic.resumeUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={() => setIsResumeModalOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl font-semibold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
-                >
-                  <Eye className="h-5 w-5" />
-                  <span>দেখুন</span>
-                </a>
-                
-                <a 
-                  href={basic.resumeUrl} 
-                  download 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsResumeModalOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl font-semibold shadow-md transition-colors"
-                >
-                  <FileDown className="h-5 w-5" />
-                  <span>ডাউনলোড করুন</span>
-                </a>
+              {/* Modal PDF Viewer / Preview Container */}
+              <div className="flex-grow overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 min-h-[350px] sm:min-h-[480px] flex flex-col items-center justify-center relative">
+                {basic.resumeUrl ? (
+                  <iframe
+                    src={basic.resumeUrl}
+                    className="w-full h-full min-h-[380px] sm:min-h-[500px] rounded-2xl"
+                    title={`${basic.fullName} Resume`}
+                  />
+                ) : (
+                  <div className="text-center p-8 space-y-4 max-w-md">
+                    <div className="w-14 h-14 mx-auto rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center border border-amber-500/20">
+                      <FileText className="h-7 w-7" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 dark:text-white">No Resume Uploaded Yet</h4>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                      The portfolio owner has not attached a Resume document yet. Log into the Admin Panel under <span className="font-mono font-bold text-blue-500">About &gt; Basic Info</span> to upload your Resume PDF or paste a view link.
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Actions Footer */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
+                  Previewing live document. Use the buttons to view full size or download directly.
+                </p>
+
+                {basic.resumeUrl && (
+                  <div className="flex items-center space-x-3 w-full sm:w-auto">
+                    <a
+                      href={basic.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl font-semibold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-colors text-xs cursor-pointer border border-slate-200 dark:border-slate-700"
+                    >
+                      <Eye className="h-4 w-4 text-blue-500" />
+                      <span>Fullscreen View</span>
+                    </a>
+
+                    <a
+                      href={basic.resumeUrl}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-500/20 text-xs transition-all cursor-pointer"
+                    >
+                      <FileDown className="h-4 w-4" />
+                      <span>Download Resume (PDF)</span>
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

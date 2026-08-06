@@ -13,8 +13,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'Professional Portfolio SaaS Platform',
-  description: 'Manage projects, skills, timelines, documents, and media vault assets dynamically from a premium SaaS dashboard.',
+  title: 'Masud Rana - Portfolio',
+  description: 'Professional Portfolio SaaS Platform',
 };
 
 export default function RootLayout({

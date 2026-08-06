@@ -3,9 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../../../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, AlertCircle, Loader2, Save, X } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2, Save, X, FileText, UploadCloud, Trash2, ExternalLink } from 'lucide-react';
+import { useAbout } from '../../../../context/AboutContext';
 
 export default function AboutBasicAdmin() {
+  const { fetchAbout } = useAbout();
   const [formFields, setFormFields] = useState({
     fullName: '',
     tagline: '',
@@ -24,6 +26,7 @@ export default function AboutBasicAdmin() {
 
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isUploadingResume, setIsUploadingResume] = useState(false);
   const [toastMsg, setToastMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const triggerToast = (text: string, type: 'success' | 'error' = 'success') => {
@@ -57,6 +60,7 @@ export default function AboutBasicAdmin() {
       const res = await API.put('/about/basic', formFields);
       if (res.data?.success) {
         triggerToast('Basic information saved successfully!');
+        await fetchAbout();
       } else {
         triggerToast('Failed to save', 'error');
       }
@@ -225,17 +229,114 @@ export default function AboutBasicAdmin() {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-6">
-          <div className="space-y-2">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Resume Link (PDF, Doc, or Google Drive)</label>
-            <input
-              type="url"
-              value={formFields.resumeUrl}
-              onChange={(e) => setFormFields({ ...formFields, resumeUrl: e.target.value })}
-              className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 focus:border-indigo-500 rounded-xl text-sm text-slate-800 dark:text-slate-200"
-              placeholder="https://drive.google.com/... or https://yourdomain.com/resume.pdf"
-            />
+        {/* Resume / CV Management Card */}
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-indigo-500/20 text-white space-y-4 shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+            <div>
+              <div className="flex items-center space-x-2">
+                <FileText className="h-5 w-5 text-indigo-400" />
+                <h3 className="text-lg font-bold text-white">Resume / CV Management</h3>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Upload your resume PDF/DOC file or paste a Google Drive view link to display on the homepage.
+              </p>
+            </div>
+
+            {formFields.resumeUrl && (
+              <div className="flex items-center space-x-2">
+                <a
+                  href={formFields.resumeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-colors border border-indigo-500/30"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  <span>Preview</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setFormFields({ ...formFields, resumeUrl: '' })}
+                  className="px-3.5 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-colors border border-rose-500/30"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span>Remove Resume</span>
+                </button>
+              </div>
+            )}
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            {/* File Upload Option */}
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-300">Upload PDF / Document File</label>
+              <div className="relative">
+                <input
+                  type="file"
+                  id="resumeFileUpload"
+                  accept=".pdf,.doc,.docx"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    try {
+                      setIsUploadingResume(true);
+                      const formData = new FormData();
+                      formData.append('image', file); // API expects upload file field
+                      const res = await API.post('/about/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                      });
+                      if (res.data?.success && res.data.data?.url) {
+                        setFormFields((prev) => ({ ...prev, resumeUrl: res.data.data.url }));
+                        triggerToast('Resume uploaded successfully!');
+                      } else {
+                        triggerToast('Failed to upload file', 'error');
+                      }
+                    } catch (err: any) {
+                      triggerToast(err.response?.data?.message || 'Error uploading resume', 'error');
+                    } finally {
+                      setIsUploadingResume(false);
+                      e.target.value = '';
+                    }
+                  }}
+                  className="hidden"
+                />
+                <label
+                  htmlFor="resumeFileUpload"
+                  className="flex items-center justify-center space-x-2 py-3 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold cursor-pointer transition-all shadow-md shadow-indigo-600/20"
+                >
+                  {isUploadingResume ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <UploadCloud className="h-4 w-4" />
+                  )}
+                  <span>{isUploadingResume ? 'Uploading File...' : 'Upload PDF File'}</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Direct URL Option */}
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-300">Or Paste Direct URL (Google Drive / Cloudinary)</label>
+              <input
+                type="url"
+                value={formFields.resumeUrl}
+                onChange={(e) => setFormFields({ ...formFields, resumeUrl: e.target.value })}
+                className="w-full px-4 py-2.5 bg-slate-900 border border-white/10 focus:border-indigo-500 rounded-xl text-xs text-white placeholder-slate-500"
+                placeholder="https://drive.google.com/... or https://domain.com/resume.pdf"
+              />
+            </div>
+          </div>
+
+          {formFields.resumeUrl ? (
+            <div className="p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center justify-between text-xs text-indigo-300">
+              <span className="truncate max-w-[80%] font-mono">Attached: {formFields.resumeUrl}</span>
+              <span className="px-2 py-0.5 bg-indigo-500/20 rounded text-[10px] uppercase font-bold text-indigo-300">Active</span>
+            </div>
+          ) : (
+            <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-300 flex items-center space-x-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>No Resume attached yet. Upload a file above or paste a URL link.</span>
+            </div>
+          )}
         </div>
 
         {/* Social Links Section */}
