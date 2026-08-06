@@ -112,12 +112,12 @@ I strongly believe that a healthy work-life balance and continuous personal disc
           </div>
 
           {/* ULTRA-EXECUTIVE PROFILE HERO CARD */}
-          <section className="bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
+          <section className="bg-white/30 dark:bg-slate-900/40 rounded-3xl p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
               {/* Photo Frame with Ambient Shadow */}
               <div className="lg:col-span-4 flex justify-center">
-                <div className="relative group w-full max-w-[290px] aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 p-1.5 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-blue-500/10 dark:shadow-none">
+                <div className="relative group w-full max-w-[290px] aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-500 dark:to-slate-800 p-1.5 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-blue-500/10 dark:shadow-none">
                   <img
                     src={about.basic?.profileImage?.url || about.basic?.coverImage?.url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60'}
                     alt={name}
@@ -132,9 +132,9 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 
                 {/* Title & Name */}
                 <div className="space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">
+                  {/* <span className="text-[11px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">
                     Overview
-                  </span>
+                  </span> */}
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                     {name}
                   </h1>
@@ -149,7 +149,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 </p>
 
                 {/* Email & Address with Sleek Icons */}
-                <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium py-3 border-y border-slate-200/60 dark:border-slate-800/60">
+                <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm font-medium">
                   {about.basic?.contactEmail && (
                     <div className="flex items-center space-x-2">
                       <Mail className="h-4 w-4 text-blue-500 shrink-0" />
@@ -165,7 +165,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 </div>
 
                 {/* Action Buttons with Clean Icons */}
-                <div className="pt-2 flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => setIsResumeModalOpen(true)}
                     className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-md shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-xs"
