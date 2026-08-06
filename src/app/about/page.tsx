@@ -7,12 +7,12 @@ import { useAuth } from '../../context/AuthContext';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ChevronDown, X, Lock } from 'lucide-react';
+import { 
+  ArrowLeft, ChevronDown, X, Lock, Mail, MapPin, 
+  FileDown, Camera, Eye, MessageCircle, Sparkles, 
+  ShieldCheck, Cpu, Lightbulb, BookOpen, Coffee 
+} from 'lucide-react';
 import Link from 'next/link';
-
-interface CardModalData {
-  content: React.ReactNode;
-}
 
 export default function AboutJourneyPage() {
   const { about, loading } = useAbout();
@@ -46,7 +46,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F5F7FB] dark:bg-[#0F172A] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] flex items-center justify-center">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
       </div>
     );
@@ -54,7 +54,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
 
   if (!about) {
     return (
-      <div className="min-h-screen bg-[#F5F7FB] dark:bg-[#0F172A] flex flex-col items-center justify-center text-center p-4">
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] flex flex-col items-center justify-center text-center p-4">
         <h2 className="text-xl font-bold mb-2">No Profile Data Found</h2>
         <Link href="/" className="text-blue-500 hover:underline">Back to Home</Link>
       </div>
@@ -62,8 +62,8 @@ I strongly believe that a healthy work-life balance and continuous personal disc
   }
 
   const name = about.basic?.fullName || "Masud Rana";
-  const title = about.basic?.tagline || "Full Stack Developer & Architect";
-  const introduction = about.basic?.shortBio || about.basic?.mission || "Specializing in modern full-stack web applications, type-safe APIs, and responsive SaaS user interfaces.";
+  const title = about.basic?.tagline || "Full Stack Web Developer";
+  const introduction = about.basic?.shortBio || about.basic?.mission || "I am a passionate Full Stack Web Developer focused on building modern, scalable, and user-centered web applications. I combine clean code, thoughtful design, and efficient problem-solving to create digital experiences that are both functional and impactful.";
   const professionalSummary = about.professional?.professionalSummary || "Experienced software engineer dedicated to crafting clean, high-performance web applications and modular digital systems.";
   const whoIAm = about.professional?.whoIAm || "A forward-thinking software developer driven by architectural elegance, intuitive UI design, and robust API development.";
   const philosophy = about.professional?.philosophy || "Simple, well-tested code is better than clever, complex code. Prioritizing maintainability, security, and developer ergonomics.";
@@ -84,98 +84,126 @@ I strongly believe that a healthy work-life balance and continuous personal disc
   });
 
   return (
-    <div className="min-h-screen bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans" suppressHydrationWarning>
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B0F19] text-[#0F172A] dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans" suppressHydrationWarning>
       <Navbar />
 
       <main className="flex-grow pt-28 pb-24 relative overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
+        {/* Ambient Glow */}
+        <div className="absolute top-0 left-1/3 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-          {/* Top Bar Navigation */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
+
+          {/* Navigation Bar */}
+          <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="inline-flex items-center space-x-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group bg-white/70 dark:bg-slate-900/70 border border-slate-200/60 dark:border-slate-800/60 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider font-mono cursor-pointer"
+              className="inline-flex items-center space-x-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider font-mono shadow-sm cursor-pointer"
             >
-              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              <ArrowLeft className="h-4 w-4" />
               <span>Back to Home</span>
             </Link>
 
             {about.basic?.availability && (
-              <span className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-900/30 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+              <span className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-950/40 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{about.basic.availability}</span>
               </span>
             )}
           </div>
 
-          {/* Executive Identity & Overview */}
-          <section className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-slate-200/50 dark:border-slate-800/50 shadow-sm relative overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* ULTRA-EXECUTIVE PROFILE HERO CARD */}
+          <section className="bg-white dark:bg-slate-900/90 rounded-3xl p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
-              {/* Profile Photo */}
+              {/* Photo Frame with Ambient Shadow */}
               <div className="lg:col-span-4 flex justify-center">
-                <div className="relative rounded-2xl overflow-hidden shadow-md border border-slate-200 dark:border-slate-800 max-w-[280px] w-full aspect-square bg-slate-100 dark:bg-slate-800">
+                <div className="relative group w-full max-w-[290px] aspect-[4/5] sm:aspect-square lg:aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 p-1.5 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-blue-500/10 dark:shadow-none">
                   <img
                     src={about.basic?.profileImage?.url || about.basic?.coverImage?.url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60'}
                     alt={name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-[1.02]"
                   />
+                  <div className="absolute inset-0 rounded-xl ring-1 ring-black/5 dark:ring-white/10 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Personal Identity */}
+              {/* Executive Text & Contact Meta */}
               <div className="lg:col-span-8 space-y-5">
+                
+                {/* Title & Name */}
                 <div className="space-y-1">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">
                     Overview
                   </span>
-                  <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                     {name}
                   </h1>
-                  <p className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400">
+                  <p className="text-base sm:text-lg font-bold text-blue-600 dark:text-blue-400 mt-1">
                     {title}
                   </p>
                 </div>
 
-                <p className="text-base leading-relaxed text-slate-700 dark:text-slate-300 font-light">
+                {/* Bio Description */}
+                <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300 font-normal">
                   {introduction}
                 </p>
 
-                {/* Location & Contact Meta */}
-                <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium pt-1">
-                  {about.basic?.contactEmail && <span>{about.basic.contactEmail}</span>}
-                  {about.basic?.location && <span>• {about.basic.location}</span>}
+                {/* Email & Address with Sleek Icons */}
+                <div className="flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium py-3 border-y border-slate-200/60 dark:border-slate-800/60">
+                  {about.basic?.contactEmail && (
+                    <div className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4 text-blue-500 shrink-0" />
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">{about.basic.contactEmail}</span>
+                    </div>
+                  )}
+                  {about.basic?.location && (
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="h-4 w-4 text-blue-500 shrink-0" />
+                      <span className="text-slate-800 dark:text-slate-200 font-medium">{about.basic.location}</span>
+                    </div>
+                  )}
                 </div>
 
-                {/* Formal Action Buttons (Logo-free) */}
-                <div className="pt-3 flex flex-wrap items-center gap-4">
+                {/* Action Buttons with Clean Icons */}
+                <div className="pt-2 flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => setIsResumeModalOpen(true)}
-                    className="px-7 py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 transition-all text-xs cursor-pointer shadow-sm"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-md shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-xs"
                   >
+                    <FileDown className="h-4 w-4" />
                     <span>Resume</span>
                   </button>
 
                   <a
                     href="#personal-gallery"
-                    className="px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 transition-all text-xs border border-slate-200 dark:border-slate-700"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-slate-100 transition-all text-xs border border-slate-200 dark:border-slate-700 cursor-pointer shadow-sm"
                   >
+                    <Camera className="h-4 w-4 text-indigo-500" />
                     <span>Personal Gallery</span>
                   </a>
+
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold bg-emerald-500/10 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all text-xs cursor-pointer"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Get In Touch</span>
+                  </a>
                 </div>
+
               </div>
 
             </div>
           </section>
 
-          {/* Cards Section: Blended seamlessly with background */}
+          {/* Seamless Blended Cards Section */}
           <div className="space-y-6">
             <div className="space-y-1">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
                 Profile & Professional Details
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Click <span className="font-semibold text-blue-500">"See More"</span> on any topic to read full content.
+                Click <span className="font-semibold text-blue-500">"See More"</span> to expand complete details.
               </p>
             </div>
 
@@ -186,13 +214,16 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300"
+                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 shadow-sm"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-blue-500">
-                    Summary
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-blue-500">
+                      Summary
+                    </span>
+                    <ShieldCheck className="h-4 w-4 text-blue-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Professional Summary & Mindset
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
@@ -200,15 +231,15 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/40 dark:border-slate-800/40 mt-5">
+                <div className="pt-4 border-t border-slate-200/50 dark:border-slate-800/50 mt-5">
                   <button
                     onClick={() => setActiveModalContent(
-                      <div className="space-y-6 text-slate-800 dark:text-slate-200">
+                      <div className="space-y-5 text-slate-800 dark:text-slate-200">
                         <div>
                           <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-blue-500 mb-2">
                             Professional Summary
                           </h4>
-                          <p className="text-sm sm:text-base leading-relaxed p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 font-light">
+                          <p className="text-sm leading-relaxed p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 font-normal">
                             {professionalSummary}
                           </p>
                         </div>
@@ -216,14 +247,15 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                           <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-blue-500 mb-2">
                             Developer Mindset
                           </h4>
-                          <p className="text-sm sm:text-base leading-relaxed p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 font-light">
+                          <p className="text-sm leading-relaxed p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 font-normal">
                             {whoIAm}
                           </p>
                         </div>
                       </div>
                     )}
-                    className="w-full py-2.5 px-4 rounded-lg bg-blue-500/10 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-bold text-xs hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all cursor-pointer text-center"
+                    className="w-full py-2.5 px-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all cursor-pointer"
                   >
+                    <Eye className="h-3.5 w-3.5" />
                     <span>See More</span>
                   </button>
                 </div>
@@ -234,13 +266,16 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300"
+                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 shadow-sm"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-indigo-500">
-                    Philosophy
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-indigo-500">
+                      Philosophy
+                    </span>
+                    <Cpu className="h-4 w-4 text-indigo-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Development Philosophy
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
@@ -248,20 +283,21 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/40 dark:border-slate-800/40 mt-5">
+                <div className="pt-4 border-t border-slate-200/50 dark:border-slate-800/50 mt-5">
                   <button
                     onClick={() => setActiveModalContent(
-                      <div className="space-y-4 text-slate-800 dark:text-slate-200">
+                      <div className="space-y-3 text-slate-800 dark:text-slate-200">
                         <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-indigo-500 mb-2">
                           Development Philosophy
                         </h4>
-                        <p className="text-sm sm:text-base leading-relaxed p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 font-light">
+                        <p className="text-sm leading-relaxed p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 font-normal">
                           {philosophy}
                         </p>
                       </div>
                     )}
-                    className="w-full py-2.5 px-4 rounded-lg bg-indigo-500/10 dark:bg-indigo-950/30 text-indigo-600 dark:text-indigo-400 font-bold text-xs hover:bg-indigo-600 hover:text-white transition-all cursor-pointer text-center"
+                    className="w-full py-2.5 px-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-indigo-600 hover:text-white transition-all cursor-pointer"
                   >
+                    <Eye className="h-3.5 w-3.5" />
                     <span>See More</span>
                   </button>
                 </div>
@@ -272,38 +308,42 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300"
+                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 shadow-sm"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-amber-500">
-                    Values
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-                    Core Principles & Values
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-amber-500">
+                      Values
+                    </span>
+                    <Lightbulb className="h-4 w-4 text-amber-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                    Core Principles & Standards
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
                     {coreValues.slice(0, 2).join(' • ')}
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/40 dark:border-slate-800/40 mt-5">
+                <div className="pt-4 border-t border-slate-200/50 dark:border-slate-800/50 mt-5">
                   <button
                     onClick={() => setActiveModalContent(
-                      <div className="space-y-4 text-slate-800 dark:text-slate-200">
+                      <div className="space-y-3 text-slate-800 dark:text-slate-200">
                         <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-amber-500 mb-2">
                           Core Principles & Standards
                         </h4>
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                           {coreValues.map((val: string, idx: number) => (
-                            <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-medium">
+                            <div key={idx} className="p-3.5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 text-xs sm:text-sm font-medium">
                               {val}
                             </div>
                           ))}
                         </div>
                       </div>
                     )}
-                    className="w-full py-2.5 px-4 rounded-lg bg-amber-500/10 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 font-bold text-xs hover:bg-amber-600 hover:text-white transition-all cursor-pointer text-center"
+                    className="w-full py-2.5 px-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-amber-600 hover:text-white transition-all cursor-pointer"
                   >
+                    <Eye className="h-3.5 w-3.5" />
                     <span>See More</span>
                   </button>
                 </div>
@@ -314,13 +354,16 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300"
+                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 shadow-sm"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-emerald-500">
-                    Journey
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-emerald-500">
+                      Journey
+                    </span>
+                    <BookOpen className="h-4 w-4 text-emerald-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Professional Journey
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
@@ -328,24 +371,24 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/40 dark:border-slate-800/40 mt-5">
+                <div className="pt-4 border-t border-slate-200/50 dark:border-slate-800/50 mt-5">
                   <button
                     onClick={() => setActiveModalContent(
-                      <div className="space-y-6 text-slate-800 dark:text-slate-200">
+                      <div className="space-y-5 text-slate-800 dark:text-slate-200">
                         <div>
                           <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-emerald-500 mb-2">
                             Professional Journey
                           </h4>
-                          <p className="text-sm sm:text-base leading-relaxed p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 font-light whitespace-pre-wrap">
+                          <p className="text-sm leading-relaxed p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 font-normal whitespace-pre-wrap">
                             {journeyText}
                           </p>
                         </div>
                         {about.timelines && about.timelines.length > 0 && (
                           <div className="space-y-3">
                             <h5 className="text-xs font-bold uppercase font-mono tracking-wider text-emerald-500">Milestones</h5>
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                               {about.timelines.map((t: any, idx: number) => (
-                                <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 space-y-1">
+                                <div key={idx} className="p-3.5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 space-y-1">
                                   <div className="flex justify-between text-xs font-mono text-slate-400">
                                     <span className="font-bold text-slate-800 dark:text-slate-200">{t.title}</span>
                                     <span>{t.date}</span>
@@ -358,8 +401,9 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                         )}
                       </div>
                     )}
-                    className="w-full py-2.5 px-4 rounded-lg bg-emerald-500/10 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 font-bold text-xs hover:bg-emerald-600 hover:text-white transition-all cursor-pointer text-center"
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-emerald-600 hover:text-white transition-all cursor-pointer"
                   >
+                    <Eye className="h-3.5 w-3.5" />
                     <span>See More</span>
                   </button>
                 </div>
@@ -370,13 +414,16 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 md:col-span-2"
+                className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 flex flex-col justify-between hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 shadow-sm md:col-span-2"
               >
                 <div className="space-y-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-purple-500">
-                    Personal
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider font-mono text-purple-500">
+                      Personal
+                    </span>
+                    <Coffee className="h-4 w-4 text-purple-500" />
+                  </div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Beyond Coding & Life
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
@@ -384,20 +431,21 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-200/40 dark:border-slate-800/40 mt-5">
+                <div className="pt-4 border-t border-slate-200/50 dark:border-slate-800/50 mt-5">
                   <button
                     onClick={() => setActiveModalContent(
-                      <div className="space-y-4 text-slate-800 dark:text-slate-200">
+                      <div className="space-y-3 text-slate-800 dark:text-slate-200">
                         <h4 className="text-xs font-bold uppercase font-mono tracking-wider text-purple-500 mb-2">
                           Beyond Coding & Personal Life
                         </h4>
-                        <p className="text-sm sm:text-base leading-relaxed p-5 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 font-light whitespace-pre-wrap">
+                        <p className="text-sm leading-relaxed p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200/80 dark:border-slate-800 font-normal whitespace-pre-wrap">
                           {lifestyleText}
                         </p>
                       </div>
                     )}
-                    className="w-full py-2.5 px-4 rounded-lg bg-purple-500/10 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 font-bold text-xs hover:bg-purple-600 hover:text-white transition-all cursor-pointer text-center"
+                    className="w-full py-2.5 px-4 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-purple-600 hover:text-white transition-all cursor-pointer"
                   >
+                    <Eye className="h-3.5 w-3.5" />
                     <span>See More</span>
                   </button>
                 </div>
@@ -526,27 +574,10 @@ I strongly believe that a healthy work-life balance and continuous personal disc
             </section>
           )}
 
-          {/* Formal Contact CTA */}
-          {/* <section className="bg-slate-900 text-white p-8 sm:p-12 rounded-3xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left">
-              <h3 className="text-2xl font-bold tracking-tight">Let's Connect & Collaborate</h3>
-              <p className="text-xs text-slate-400 max-w-xl font-light">
-                Open to engineering projects, architectural discussions, or consulting opportunities.
-              </p>
-            </div>
-
-            <Link
-              href="/#contact"
-              className="px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-md transition-all text-xs cursor-pointer whitespace-nowrap"
-            >
-              <span>Get In Touch</span>
-            </Link>
-          </section> */}
-
         </div>
       </main>
 
-      {/* --- PURE CONTENT POP-UP MODAL (Logo-free, Content Focused) --- */}
+      {/* --- CONTENT POP-UP MODAL --- */}
       <AnimatePresence>
         {activeModalContent && (
           <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 bg-slate-950/75 backdrop-blur-md">
@@ -556,7 +587,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
               exit={{ opacity: 0, scale: 0.96, y: 15 }}
               className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-6 max-h-[85vh] flex flex-col"
             >
-              {/* Simple Close Bar */}
+              {/* Close Button */}
               <div className="flex justify-end border-b border-slate-200/50 dark:border-slate-800/50 pb-3">
                 <button
                   onClick={() => setActiveModalContent(null)}
@@ -566,12 +597,12 @@ I strongly believe that a healthy work-life balance and continuous personal disc
                 </button>
               </div>
 
-              {/* Specific Detailed Content Only */}
+              {/* Specific Content */}
               <div className="flex-grow overflow-y-auto pr-2">
                 {activeModalContent}
               </div>
 
-              {/* Footer Close Button */}
+              {/* Close Action */}
               <div className="pt-3 border-t border-slate-200/50 dark:border-slate-800/50 flex justify-end">
                 <button
                   onClick={() => setActiveModalContent(null)}

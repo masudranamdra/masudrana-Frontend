@@ -188,27 +188,30 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
 
             {/* Actions & Resume Button */}
             <div className="pt-6 flex flex-wrap items-center gap-4">
-              {/* Primary Resume Button (Logo-free, formal) */}
+              {/* Primary Resume Button */}
               <button
                 onClick={() => setIsResumeModalOpen(true)}
-                className="px-7 py-3.5 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-md transition-all duration-300 cursor-pointer text-sm"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-md shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer text-xs sm:text-sm"
               >
+                <FileDown className="h-4 w-4" />
                 <span>Resume</span>
               </button>
 
               {/* Secondary Read Full Story Button */}
               <Link
                 href="/about"
-                className="px-7 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-sm cursor-pointer text-sm"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all shadow-sm cursor-pointer text-xs sm:text-sm"
               >
                 <span>Read Full Story</span>
+                <ArrowRight className="h-4 w-4 text-blue-500" />
               </Link>
 
               {/* Get In Touch Button */}
               <a
                 href="#contact"
-                className="px-6 py-3.5 rounded-xl font-bold bg-emerald-500/10 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300 cursor-pointer text-sm"
+                className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl font-bold bg-emerald-500/10 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all cursor-pointer text-xs sm:text-sm"
               >
+                <MessageCircle className="h-4 w-4" />
                 <span>Get In Touch</span>
               </a>
             </div>
