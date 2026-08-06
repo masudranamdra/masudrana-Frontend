@@ -140,30 +140,63 @@ export const ProjectsSection: React.FC = () => {
 
                 <div className="p-6 sm:p-8 flex flex-col flex-grow space-y-4">
                   <div className="space-y-1.5">
-                    <span className="text-[10px] font-bold tracking-widest text-[#2563EB] dark:text-blue-400 uppercase font-mono">
+                    <span className="text-[10px] font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase font-mono">
                       {project.category}
                     </span>
-                    <h3 className="text-[#0F172A] dark:text-white font-extrabold text-xl sm:text-2xl group-hover:text-[#2563EB] dark:group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-slate-900 dark:text-white font-extrabold text-xl sm:text-2xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
                   </div>
                   
-                  <p className="text-[#334155] dark:text-slate-300 text-sm line-clamp-3 leading-relaxed flex-grow font-light">
+                  {/* 3-line description snippet */}
+                  <p className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 leading-relaxed flex-grow font-normal">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-4 border-t border-[#E2E8F0] dark:border-slate-700">
+                  <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
                     {project.tags.slice(0, 3).map((tag) => (
-                      <span key={tag} className="px-3 py-1 bg-slate-50 dark:bg-slate-900/50 border border-[#E2E8F0] dark:border-slate-700/50 rounded-lg text-xs text-[#334155] dark:text-slate-300 font-mono font-medium">
+                      <span key={tag} className="px-3 py-1 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-lg text-xs text-slate-700 dark:text-slate-300 font-mono font-medium">
                         {tag}
                       </span>
                     ))}
                     {project.tags.length > 3 && (
-                      <span className="px-3 py-1 bg-slate-50 dark:bg-slate-900/50 border border-[#E2E8F0] dark:border-slate-700/50 rounded-lg text-xs text-[#64748B] dark:text-slate-400 font-mono font-medium">
+                      <span className="px-3 py-1 bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-lg text-xs text-slate-500 dark:text-slate-400 font-mono font-medium">
                         +{project.tags.length - 3}
                       </span>
                     )}
                   </div>
+
+                  {/* Mobile Direct Action Buttons (Always visible on mobile touch devices) */}
+                  <div className="flex sm:hidden items-center justify-between gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+                    <button
+                      onClick={() => openProjectModal(project, 'overview')}
+                      className="flex-1 py-2.5 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm cursor-pointer"
+                    >
+                      <Eye className="h-3.5 w-3.5" />
+                      <span>Details</span>
+                    </button>
+
+                    <button
+                      onClick={() => openProjectModal(project, 'document')}
+                      className="py-2.5 px-3 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-xl text-xs font-bold flex items-center justify-center space-x-1 border border-slate-200 dark:border-slate-700 cursor-pointer"
+                    >
+                      <FileText className="h-3.5 w-3.5" />
+                      <span>Case Study</span>
+                    </button>
+
+                    {project.demoLink && (
+                      <a
+                        href={project.demoLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl flex items-center justify-center cursor-pointer"
+                        title="Live Demo"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    )}
+                  </div>
+
                 </div>
               </motion.div>
             ))}
