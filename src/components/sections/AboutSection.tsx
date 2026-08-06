@@ -188,34 +188,27 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
 
             {/* Actions & Resume Button */}
             <div className="pt-6 flex flex-wrap items-center gap-4">
-              {/* Primary Resume / CV Button */}
+              {/* Primary Resume Button (Logo-free, formal) */}
               <button
                 onClick={() => setIsResumeModalOpen(true)}
-                className="inline-flex items-center space-x-3 px-7 py-3.5 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 shadow-xl shadow-blue-500/25 dark:shadow-blue-900/40 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 transform border border-blue-400/30 cursor-pointer group"
+                className="px-7 py-3.5 rounded-xl font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-md transition-all duration-300 cursor-pointer text-sm"
               >
-                <div className="relative flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-blue-100 group-hover:scale-110 transition-transform" />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-blue-700 animate-pulse" />
-                </div>
-                <span className="tracking-wide">Resume</span>
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-white/20 text-white tracking-widest font-mono">CV</span>
+                <span>Resume</span>
               </button>
 
               {/* Secondary Read Full Story Button */}
               <Link
                 href="/about"
-                className="inline-flex items-center space-x-2.5 px-7 py-3.5 rounded-2xl font-bold bg-white/80 dark:bg-slate-800/80 backdrop-blur-md text-slate-800 dark:text-white border border-slate-200/80 dark:border-slate-700/80 hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 hover:-translate-y-1 active:translate-y-0 transition-all duration-300 shadow-md shadow-slate-200/50 dark:shadow-none cursor-pointer group"
+                className="px-7 py-3.5 rounded-xl font-bold bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-sm cursor-pointer text-sm"
               >
                 <span>Read Full Story</span>
-                <ArrowRight className="h-4 w-4 text-blue-500 group-hover:translate-x-1 transition-transform" />
               </Link>
 
               {/* Get In Touch Button */}
               <a
                 href="#contact"
-                className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-2xl font-bold bg-emerald-500/10 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                className="px-6 py-3.5 rounded-xl font-bold bg-emerald-500/10 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all duration-300 cursor-pointer text-sm"
               >
-                <MessageCircle className="h-4 w-4" />
                 <span>Get In Touch</span>
               </a>
             </div>
