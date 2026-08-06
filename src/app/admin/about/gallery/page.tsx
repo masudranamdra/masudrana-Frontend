@@ -72,10 +72,19 @@ export default function AboutGalleryAdmin() {
     triggerToast('Image uploaded and added to gallery!');
   };
 
+  const addImageURL = () => {
+    setFormFields({
+      gallery: [
+        { url: '', publicId: '', caption: '', type: 'image', isFeatured: false, isProtected: false },
+        ...formFields.gallery
+      ]
+    });
+  };
+
   const addVideoURL = () => {
     setFormFields({
       gallery: [
-        { url: '', publicId: '', caption: '', type: 'video', isFeatured: false },
+        { url: '', publicId: '', caption: '', type: 'video', isFeatured: false, isProtected: false },
         ...formFields.gallery
       ]
     });
@@ -83,7 +92,17 @@ export default function AboutGalleryAdmin() {
 
   const updateGalleryItem = (index: number, key: string, value: any) => {
     const updated = [...formFields.gallery];
-    updated[index] = { ...updated[index], [key]: value };
+    let finalValue = value;
+
+    // If updating URL of an image, format Google Drive links to direct image URLs
+    if (key === 'url' && typeof value === 'string' && value.includes('drive.google.com')) {
+      const driveIdMatch = value.match(/\/file\/d\/([^\/]+)/) || value.match(/id=([^&]+)/);
+      if (driveIdMatch && driveIdMatch[1]) {
+        finalValue = `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}`;
+      }
+    }
+
+    updated[index] = { ...updated[index], [key]: finalValue };
     setFormFields({ gallery: updated });
   };
 
@@ -121,21 +140,28 @@ export default function AboutGalleryAdmin() {
         )}
       </AnimatePresence>
 
-      <div className="flex justify-between items-center border-b border-slate-200 dark:border-white/5 pb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-white/5 pb-4">
         <div>
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
             <ImageIcon className="w-6 h-6 text-indigo-500" />
             Media Gallery
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Upload images to Cloudinary or link external videos.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Upload files or paste direct image links (ImgBB, Google Drive, Unsplash, Cloudinary).</p>
         </div>
-        <button type="button" onClick={addVideoURL} className="text-white bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 flex items-center space-x-2 text-sm font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm">
-          <Video className="h-4 w-4" /> <span>Add Video Link</span>
-        </button>
+
+        <div className="flex items-center gap-2 flex-wrap">
+          <button type="button" onClick={addImageURL} className="text-white bg-indigo-600 hover:bg-indigo-500 flex items-center space-x-2 text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm cursor-pointer">
+            <ImageIcon className="h-4 w-4" /> <span>Add Image URL</span>
+          </button>
+
+          <button type="button" onClick={addVideoURL} className="text-white bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 flex items-center space-x-2 text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm cursor-pointer">
+            <Video className="h-4 w-4" /> <span>Add Video Link</span>
+          </button>
+        </div>
       </div>
 
       <div className="bg-slate-50 dark:bg-slate-900/30 p-6 rounded-2xl border border-slate-200 dark:border-white/5">
-        <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-4">Upload New Image</h3>
+        <h3 className="text-sm font-bold text-slate-800 dark:text-white mb-4">Option A: Upload Local Image File</h3>
         <ImageUploader onUploadSuccess={handleUploadSuccess} folder="about_gallery" />
       </div>
 
@@ -170,18 +196,18 @@ export default function AboutGalleryAdmin() {
 
               {/* Edit Details */}
               <div className="p-4 space-y-3">
-                {item.type === 'video' && (
-                  <div className="space-y-1">
-                    <label className="text-xs text-slate-500 dark:text-slate-400 font-bold">Video URL</label>
-                    <input 
-                      type="text" 
-                      value={item.url} 
-                      onChange={(e) => updateGalleryItem(index, 'url', e.target.value)} 
-                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded-lg text-sm text-slate-800 dark:text-slate-300 focus:outline-none focus:border-indigo-500" 
-                      placeholder="YouTube/Vimeo embed URL" 
-                    />
-                  </div>
-                )}
+                <div className="space-y-1">
+                  <label className="text-xs text-slate-500 dark:text-slate-400 font-bold">
+                    {item.type === 'image' ? 'Image URL (Direct / Drive / ImgBB / Cloudinary)' : 'Video URL'}
+                  </label>
+                  <input 
+                    type="text" 
+                    value={item.url} 
+                    onChange={(e) => updateGalleryItem(index, 'url', e.target.value)} 
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-white/5 rounded-lg text-xs text-slate-800 dark:text-slate-300 focus:outline-none focus:border-indigo-500" 
+                    placeholder={item.type === 'image' ? 'Paste image URL (https://...)' : 'YouTube/Vimeo embed URL'} 
+                  />
+                </div>
                 <div className="space-y-1">
                   <label className="text-xs text-slate-500 dark:text-slate-400 font-bold">Caption</label>
                   <input 

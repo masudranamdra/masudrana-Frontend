@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useAbout } from '../../context/AboutContext';
 import { useConfig } from '../../context/ConfigContext';
 import { useAuth } from '../../context/AuthContext';
+import { formatPdfEmbedUrl, formatImageUrl } from '../../lib/api';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -683,7 +684,7 @@ I strongly believe that a healthy work-life balance and continuous personal disc
               <div className="flex-grow overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 min-h-[350px] sm:min-h-[480px] flex items-center justify-center">
                 {about.basic?.resumeUrl ? (
                   <iframe
-                    src={about.basic.resumeUrl}
+                    src={formatPdfEmbedUrl(about.basic.resumeUrl)}
                     className="w-full h-full min-h-[380px] sm:min-h-[500px] rounded-xl"
                     title={`${name} Resume`}
                   />

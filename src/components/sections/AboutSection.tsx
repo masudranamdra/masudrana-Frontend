@@ -8,6 +8,7 @@ import { FileDown, FileText, ArrowRight, Mail, MapPin, Eye, Globe, X, Briefcase,
 import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaYoutube, FaInstagram, FaGlobe } from 'react-icons/fa';
 import { SiMedium } from 'react-icons/si';
 import Link from 'next/link';
+import { formatPdfEmbedUrl } from '../../lib/api';
 
 interface AboutSectionProps {
   isHomepage?: boolean;
@@ -260,7 +261,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
               <div className="flex-grow overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 min-h-[350px] sm:min-h-[480px] flex flex-col items-center justify-center relative">
                 {basic.resumeUrl ? (
                   <iframe
-                    src={basic.resumeUrl}
+                    src={formatPdfEmbedUrl(basic.resumeUrl)}
                     className="w-full h-full min-h-[380px] sm:min-h-[500px] rounded-2xl"
                     title={`${basic.fullName} Resume`}
                   />

@@ -70,4 +70,41 @@ export const getAssetUrl = (url: string | undefined): string => {
   return `${host}${url}`;
 };
 
+// Helper to transform Google Drive, ImgBB, Cloudinary, or raw PDF URLs into embeddable PDF URLs
+export const formatPdfEmbedUrl = (url: string | undefined): string => {
+  if (!url) return '';
+  const cleanUrl = url.trim();
+
+  // If Google Drive link: convert /view or /edit to /preview
+  if (cleanUrl.includes('drive.google.com')) {
+    const driveIdMatch = cleanUrl.match(/\/file\/d\/([^\/]+)/) || cleanUrl.match(/id=([^&]+)/);
+    if (driveIdMatch && driveIdMatch[1]) {
+      return `https://drive.google.com/file/d/${driveIdMatch[1]}/preview`;
+    }
+  }
+
+  // If direct PDF link or Cloudinary PDF: use Google Docs PDF Viewer Embedder
+  if (cleanUrl.toLowerCase().endsWith('.pdf') || cleanUrl.includes('cloudinary.com') || cleanUrl.includes('.pdf?')) {
+    return `https://docs.google.com/gview?url=${encodeURIComponent(cleanUrl)}&embedded=true`;
+  }
+
+  return cleanUrl;
+};
+
+// Helper to transform Google Drive image URLs into direct displayable image links
+export const formatImageUrl = (url: string | undefined): string => {
+  if (!url) return '';
+  const cleanUrl = url.trim();
+
+  // If Google Drive image link: convert to direct display URL
+  if (cleanUrl.includes('drive.google.com')) {
+    const driveIdMatch = cleanUrl.match(/\/file\/d\/([^\/]+)/) || cleanUrl.match(/id=([^&]+)/);
+    if (driveIdMatch && driveIdMatch[1]) {
+      return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}`;
+    }
+  }
+
+  return cleanUrl;
+};
+
 export default API;
