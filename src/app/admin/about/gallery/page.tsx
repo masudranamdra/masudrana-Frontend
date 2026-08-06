@@ -14,6 +14,7 @@ export default function AboutGalleryAdmin() {
       caption: string; 
       type: 'image' | 'video';
       isFeatured: boolean;
+      isProtected?: boolean;
     }[]
   });
 
@@ -191,15 +192,27 @@ export default function AboutGalleryAdmin() {
                     placeholder="Describe this media..." 
                   />
                 </div>
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input 
-                    type="checkbox" 
-                    checked={item.isFeatured} 
-                    onChange={(e) => updateGalleryItem(index, 'isFeatured', e.target.checked)}
-                    className="w-4 h-4 rounded text-indigo-600 bg-slate-100 border-slate-300 dark:bg-slate-900 dark:border-slate-700"
-                  />
-                  <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">Feature in main section</span>
-                </label>
+                <div className="flex flex-col space-y-2 pt-1">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={item.isFeatured} 
+                      onChange={(e) => updateGalleryItem(index, 'isFeatured', e.target.checked)}
+                      className="w-4 h-4 rounded text-indigo-600 bg-slate-100 border-slate-300 dark:bg-slate-900 dark:border-slate-700"
+                    />
+                    <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">Feature on Homepage</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={item.isProtected || false} 
+                      onChange={(e) => updateGalleryItem(index, 'isProtected', e.target.checked)}
+                      className="w-4 h-4 rounded text-amber-500 bg-slate-100 border-slate-300 dark:bg-slate-900 dark:border-slate-700"
+                    />
+                    <span className="text-xs text-amber-500 font-bold">Private / Protected (Only Admin can see)</span>
+                  </label>
+                </div>
               </div>
             </div>
           ))}

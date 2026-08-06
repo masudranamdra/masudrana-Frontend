@@ -3,58 +3,60 @@
 import React, { useState } from 'react';
 import { useAbout } from '../../context/AboutContext';
 import { useConfig } from '../../context/ConfigContext';
+import { useAuth } from '../../context/AuthContext';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
-import { motion } from 'framer-motion';
-import { ArrowLeft, BookOpen, Coffee, Camera, Compass, ShieldCheck, Cpu, Lightbulb, Send, CheckCircle2, Calendar, MapPin, Play, ImageIcon, VideoIcon, MessageCircleQuestion, ChevronDown, Globe, Eye, FileDown, X } from 'lucide-react';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  ArrowLeft, BookOpen, Coffee, Camera, ShieldCheck, Cpu, 
+  Lightbulb, Send, CheckCircle2, Calendar, MapPin, 
+  MessageCircleQuestion, ChevronDown, Eye, FileDown, X, 
+  Lock, Sparkles, ExternalLink, UserCheck, Maximize2, Compass
+} from 'lucide-react';
 import { FaGithub, FaLinkedin, FaTwitter, FaFacebook, FaYoutube, FaInstagram, FaGlobe } from 'react-icons/fa';
 import { SiMedium } from 'react-icons/si';
 import Link from 'next/link';
 
+interface CardModalData {
+  title: string;
+  category: string;
+  icon: React.ReactNode;
+  content: React.ReactNode;
+}
+
 export default function AboutJourneyPage() {
   const { about, loading } = useAbout();
   const { config } = useConfig();
+  const { isAuthenticated } = useAuth();
+
+  // Modals state
+  const [activeModalCard, setActiveModalCard] = useState<CardModalData | null>(null);
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<any | null>(null);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [activeGalleryTab, setActiveGalleryTab] = useState<string>('all');
 
-  // Placeholder data fallback if database fields are empty
-  const defaultJourney = "From writing my first line of code to architecting complex scalable frontend applications, my journey has been fueled by an insatiable curiosity and a passion for solving real-world problems. I started as a self-taught developer tinkering with basic HTML/CSS, and quickly fell in love with the power of modern JS frameworks. Over the years, I've focused on building modular components, optimizing rendering performance, and implementing pixel-perfect designs.";
+  // Fallback default content
+  const defaultJourney = `From writing my first line of code to architecting complex scalable web applications, my journey has been fueled by an insatiable curiosity and a passion for solving real-world problems. 
 
-  const defaultLifestyle = "When I'm not glued to my IDE debugging complex logic, you'll find me exploring the great outdoors, capturing moments through my camera lens, and discovering the best local coffee shops. I believe that a healthy work-life balance is the key to sustained creativity and professional growth.";
+I started as a self-taught developer tinkering with basic HTML/CSS, and quickly fell in love with the power of modern JavaScript & TypeScript ecosystems. Over the years, I've focused on building modular components, optimizing rendering performance, and implementing pixel-perfect user interfaces with robust backend systems.`;
 
-  const defaultActivities = [
-    "Tech Community Mentoring",
-    "Open Source Contributions",
-    "Photography & Traveling",
-    "Fitness & Mindfulness"
-  ];
+  const defaultLifestyle = `When I'm not glued to my IDE debugging complex logic, you'll find me exploring the great outdoors, capturing moments through my camera lens, and discovering local coffee spots. 
 
-  const defaultLifestyleImages = [
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1504593811423-6dd665756598?w=600&auto=format&fit=crop&q=60",
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=60"
-  ];
+I strongly believe that a healthy work-life balance and continuous personal discovery are the foundations of sustained technical creativity and engineering excellence.`;
 
   const defaultCoreValues = [
     "Clean Code: Writing readable, maintainable, and self-documenting code.",
-    "Performance: Ensuring fast load times and smooth rendering profiles.",
-    "Accessibility (a11y): Crafting interfaces that everyone can use.",
-    "User Experience: Designing intuitive flows and high-fidelity layouts.",
-    "Continuous Learning: Always adapting to new standards and frameworks.",
-    "Problem Solving: Breaking down complex challenges into modular solutions.",
-    "Collaboration: Communicating clearly and supporting my team."
-  ];
-
-  const defaultCurrentFocus = [
-    "React 19 & Next.js 16 App Router",
-    "TypeScript & Type-Safe APIs",
-    "Tailwind CSS v4 & Modern PostCSS styling",
-    "Performance Profiling & Web Vitals"
+    "Performance First: Ensuring fast load times and smooth rendering profiles.",
+    "Accessibility (a11y): Crafting digital interfaces that everyone can navigate.",
+    "User Centricity: Designing intuitive flows and pixel-perfect responsive layouts.",
+    "Continuous Evolution: Constantly adapting to new standards and frameworks.",
+    "Modular Architecture: Breaking down complex challenges into decoupled systems."
   ];
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F5F7FB] dark:bg-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F7FB] dark:bg-slate-950 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2563EB]"></div>
       </div>
     );
@@ -62,7 +64,7 @@ export default function AboutJourneyPage() {
 
   if (!about) {
     return (
-      <div className="min-h-screen bg-[#F5F7FB] dark:bg-slate-900 flex flex-col items-center justify-center text-center p-4">
+      <div className="min-h-screen bg-[#F5F7FB] dark:bg-slate-950 flex flex-col items-center justify-center text-center p-4">
         <h2 className="text-2xl font-bold mb-2">No Profile Data Found</h2>
         <Link href="/" className="text-blue-500 hover:underline">Back to Home</Link>
       </div>
@@ -70,581 +72,712 @@ export default function AboutJourneyPage() {
   }
 
   const name = about.basic?.fullName || "Masud Rana";
-  const title = about.basic?.tagline || "Frontend Developer";
-  const introduction = about.basic?.mission || "I specialize in developing high-performance web applications using modern stacks.";
-  const professionalSummary = about.professional?.professionalSummary || "Frontend Engineer focused on building fast, accessible, and clean user interfaces.";
-  const whoIAm = about.professional?.whoIAm || "I am a frontend-focused developer who loves bringing designs to life with precise code and animations.";
-  const philosophy = about.professional?.philosophy || "My philosophy is that simple code is better code. I write DRY, component-based frontend projects.";
+  const title = about.basic?.tagline || "Full Stack Developer & Architect";
+  const introduction = about.basic?.shortBio || about.basic?.mission || "Specializing in modern full-stack web applications, type-safe APIs, and responsive SaaS user interfaces.";
+  const professionalSummary = about.professional?.professionalSummary || "Experienced software engineer dedicated to crafting clean, high-performance web applications and modular digital systems.";
+  const whoIAm = about.professional?.whoIAm || "A forward-thinking software developer driven by architectural elegance, intuitive UI design, and robust API development.";
+  const philosophy = about.professional?.philosophy || "Simple, well-tested code is better than clever, complex code. Prioritizing maintainability, security, and developer ergonomics.";
 
   // @ts-ignore
   const coreValues = about.professional?.coreValues?.length ? about.professional.coreValues : defaultCoreValues;
-  // @ts-ignore
-  const currentFocus = about.professional?.currentFocus?.length ? about.professional.currentFocus : defaultCurrentFocus;
   const journeyText = about.basic?.shortBio || defaultJourney;
   const lifestyleText = about.lifestyle?.lifestyleText || defaultLifestyle;
-  // @ts-ignore
-  const lifestyleImages = about.lifestyle?.lifestyleImages?.length
-    // @ts-ignore
-    ? about.lifestyle.lifestyleImages.map((img: any) => typeof img === 'string' ? img : img.url)
-    : defaultLifestyleImages;
-  // @ts-ignore
-  const activities = about.lifestyle?.dailyLifeActivities?.length ? about.lifestyle.dailyLifeActivities : defaultActivities;
-  const imageUrl = about.basic?.profileImage?.url || about.basic?.coverImage?.url;
-  const [openFaq, setOpenFaq] = React.useState<string | null>(null);
 
-  // Helper to determine animation variants based on global settings
-  const getAnimationVariants = (): any => {
-    const animation = about.settings?.globalAnimation || 'slide';
-    
-    switch (animation) {
-      case 'fade':
-        return {
-          initial: { opacity: 0 },
-          whileInView: { opacity: 1, transition: { duration: 0.6 } }
-        };
-      case 'scale':
-        return {
-          initial: { opacity: 0, scale: 0.9 },
-          whileInView: { opacity: 1, scale: 1, transition: { duration: 0.5, type: 'spring' } }
-        };
-      case 'parallax':
-        return {
-          initial: { opacity: 0, y: 50 },
-          whileInView: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
-        };
-      case 'slide':
-      default:
-        return {
-          initial: { opacity: 0, y: 20 },
-          whileInView: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-        };
-    }
-  };
-
-  const animVariants = getAnimationVariants();
+  // Filter personal gallery items
+  const galleryItems = about.gallery || [];
+  const galleryCategories = ['all', ...Array.from(new Set(galleryItems.map((item: any) => item.category || 'Personal')))];
+  
+  const filteredGallery = galleryItems.filter((item: any) => {
+    // If protected and user not logged in, exclude or mark
+    if (item.isProtected && !isAuthenticated) return false;
+    if (activeGalleryTab === 'all') return true;
+    return item.category?.toLowerCase() === activeGalleryTab.toLowerCase();
+  });
 
   return (
-    <div className="min-h-screen bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white transition-colors duration-300 flex flex-col" suppressHydrationWarning>
+    <div className="min-h-screen bg-[#F5F7FB] dark:bg-[#090D16] text-[#0F172A] dark:text-slate-100 transition-colors duration-300 flex flex-col font-sans" suppressHydrationWarning>
       <Navbar />
 
-      <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
+      <main className="flex-grow pt-28 pb-24 relative overflow-hidden">
+        {/* Background ambient lighting */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-1/3 right-10 w-[450px] h-[450px] bg-indigo-500/10 dark:bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none" />
 
-        {/* Background glow effects */}
-        <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-500/10 dark:bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-0 w-[450px] h-[450px] bg-purple-500/10 dark:bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Top Bar: Back link & Title */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <Link
+              href="/"
+              className="inline-flex items-center space-x-2 text-[#64748B] dark:text-slate-400 hover:text-[#2563EB] dark:hover:text-blue-400 transition-colors group bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm w-fit cursor-pointer"
+            >
+              <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              <span className="font-semibold text-xs uppercase tracking-wider font-mono">Back to Home</span>
+            </Link>
 
-          {/* Back Button */}
-          <Link
-            href="/"
-            className="inline-flex items-center space-x-2 text-[#64748B] dark:text-slate-400 hover:text-[#2563EB] dark:hover:text-blue-400 transition-colors mb-10 group bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 px-4 py-2 rounded-xl shadow-sm w-fit cursor-pointer"
-          >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
-            <span className="font-semibold text-sm">Back to Home</span>
-          </Link>
-
-          {/* Section 1: Professional Introduction */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
-            <div className="lg:col-span-5">
-              {imageUrl && (
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 aspect-square max-w-sm mx-auto">
-                  <img
-                    src={imageUrl}
-                    alt={name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            <div className="flex items-center space-x-3">
+              {about.basic?.availability && (
+                <span className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 dark:bg-emerald-900/30 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-bold font-mono">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{about.basic.availability}</span>
+                </span>
               )}
             </div>
+          </div>
 
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#2563EB] dark:text-blue-400 font-mono block">Professional Profile</span>
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-                About <span className="text-[#2563EB] dark:text-blue-500">{name}</span>
-              </h1>
-              <p className="text-lg font-bold text-slate-600 dark:text-slate-400">
-                {title}
-              </p>
-              <div className="h-1.5 w-16 bg-[#2563EB] dark:bg-blue-500 rounded-full" />
-              <p className="text-base sm:text-lg leading-relaxed text-[#334155] dark:text-slate-300 font-light">
-                {introduction}
-              </p>
+          {/* Section 1: Formal Executive Header Card */}
+          <section className="bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-12 border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               
-              {about.basic?.resumeUrl && (
-                <div className="pt-6">
+              {/* Profile Image Column */}
+              <div className="lg:col-span-4 flex justify-center">
+                <div className="relative group rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 dark:border-slate-800 max-w-[320px] w-full aspect-square bg-slate-100 dark:bg-slate-800">
+                  <img
+                    src={about.basic?.profileImage?.url || about.basic?.coverImage?.url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60'}
+                    alt={name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-60" />
+                </div>
+              </div>
+
+              {/* Identity & Bio Column */}
+              <div className="lg:col-span-8 space-y-6">
+                <div className="space-y-2">
+                  <span className="text-xs font-extrabold uppercase tracking-widest text-blue-600 dark:text-blue-400 font-mono">
+                    Professional Overview & Identity
+                  </span>
+                  <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
+                    {name}
+                  </h1>
+                  <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    {title}
+                  </p>
+                </div>
+
+                <p className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-300 font-light">
+                  {introduction}
+                </p>
+
+                {/* Location & Contact Meta */}
+                <div className="flex flex-wrap items-center gap-6 pt-2 text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  {about.basic?.contactEmail && (
+                    <div className="flex items-center space-x-2">
+                      <Send className="h-4 w-4 text-blue-500" />
+                      <span>{about.basic.contactEmail}</span>
+                    </div>
+                  )}
+                  {about.basic?.location && (
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="h-4 w-4 text-blue-500" />
+                      <span>{about.basic.location}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Primary Actions */}
+                <div className="pt-4 flex flex-wrap items-center gap-4">
                   <button
                     onClick={() => setIsResumeModalOpen(true)}
-                    className="inline-flex items-center justify-center space-x-2.5 w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white bg-[#2563EB] hover:bg-[#1D4ED8] dark:bg-blue-600 dark:hover:bg-blue-500 shadow-xl shadow-blue-500/20 dark:shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                    className="inline-flex items-center space-x-2.5 px-6 py-3.5 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/25 dark:shadow-blue-900/40 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer border border-blue-400/30"
                   >
-                    <FileDown className="h-5 w-5" />
-                    <span>রিজিউমি</span>
+                    <FileDown className="h-4 w-4" />
+                    <span>View / Download Resume</span>
+                  </button>
+
+                  <a
+                    href="#personal-gallery"
+                    className="inline-flex items-center space-x-2 px-6 py-3.5 rounded-2xl font-bold bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-white transition-all border border-slate-200 dark:border-slate-700"
+                  >
+                    <Camera className="h-4 w-4 text-indigo-500" />
+                    <span>Personal Gallery</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* Section 2: Structured Truncated Cards with "See More" Modals */}
+          <div className="space-y-8">
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                Core Domains & Expertise
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                Click <span className="font-semibold text-blue-500 font-mono">"See More"</span> on any card to explore complete details.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+              {/* CARD 1: Professional Summary & Mindset */}
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-none flex flex-col justify-between hover:border-blue-500/50 transition-all duration-300 group">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-2xl border border-blue-500/20">
+                      <ShieldCheck className="h-6 w-6" />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      Summary
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-500 transition-colors">
+                    Professional Summary & Mindset
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {professionalSummary}
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+                  <button
+                    onClick={() => setActiveModalCard({
+                      title: 'Professional Summary & Mindset',
+                      category: 'Overview',
+                      icon: <ShieldCheck className="h-6 w-6 text-blue-500" />,
+                      content: (
+                        <div className="space-y-6 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                          <div>
+                            <h4 className="text-xs font-extrabold uppercase tracking-wider font-mono text-blue-500 mb-2">
+                              Executive Summary
+                            </h4>
+                            <p className="p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
+                              {professionalSummary}
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="text-xs font-extrabold uppercase tracking-wider font-mono text-blue-500 mb-2">
+                              Developer Mindset
+                            </h4>
+                            <p className="p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
+                              {whoIAm}
+                            </p>
+                          </div>
+                        </div>
+                      )
+                    })}
+                    className="w-full py-2.5 px-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <Sparkles className="h-3.5 w-3.5" />
                   </button>
                 </div>
-              )}
-            </div>
-          </div>
+              </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-
-            {/* Main Content Area */}
-            <div className="lg:col-span-8 space-y-10">
-
-              {/* Section 2 & 3: Professional Summary & Who I Am */}
-              <motion.section
-                initial={animVariants.initial}
-                whileInView={animVariants.whileInView}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300 space-y-6"
-              >
-                <div className="flex items-center space-x-3 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-xl">
-                    <ShieldCheck className="h-6 w-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight">Who I Am & Professional Summary</h2>
-                </div>
-
+              {/* CARD 2: Development Philosophy */}
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-none flex flex-col justify-between hover:border-indigo-500/50 transition-all duration-300 group">
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="text-sm font-extrabold uppercase tracking-wider font-mono text-slate-400 mb-1">Professional Summary</h3>
-                    <p className="text-base leading-relaxed text-[#334155] dark:text-slate-300 font-light">
-                      {professionalSummary}
-                    </p>
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-extrabold uppercase tracking-wider font-mono text-slate-400 mb-1">Developer Mindset</h3>
-                    <p className="text-base leading-relaxed text-[#334155] dark:text-slate-300 font-light">
-                      {whoIAm}
-                    </p>
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* Section 4: Development Philosophy */}
-              <motion.section
-                initial={animVariants.initial}
-                whileInView={animVariants.whileInView}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-xl">
-                    <Cpu className="h-6 w-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight">Development Philosophy</h2>
-                </div>
-                <p className="text-base leading-relaxed text-[#334155] dark:text-slate-300 font-light">
-                  {philosophy}
-                </p>
-              </motion.section>
-
-              {/* Section 5: Core Values */}
-              <motion.section
-                initial={animVariants.initial}
-                whileInView={animVariants.whileInView}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                  <div className="p-3 bg-[#EFF6FF] dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-xl">
-                    <Lightbulb className="h-6 w-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight">Core Values</h2>
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                  {coreValues.map((val: string, idx: number) => {
-                    const parts = val.split(':');
-                    const valueTitle = parts[0];
-                    const valueDesc = parts.slice(1).join(':').trim();
-                    return (
-                      <div key={idx} className="flex items-start space-x-3 p-4 bg-[#F5F7FB] dark:bg-slate-900/50 rounded-2xl border border-[#E2E8F0] dark:border-slate-700/50">
-                        <CheckCircle2 className="h-5 w-5 text-[#2563EB] dark:text-blue-400 shrink-0 mt-0.5" />
-                        <div>
-                          <h4 className="text-sm font-bold text-[#0F172A] dark:text-white">{valueTitle}</h4>
-                          {valueDesc && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{valueDesc}</p>}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </motion.section>
-
-              {/* Section 6: Professional Journey */}
-              <motion.section
-                initial={animVariants.initial}
-                whileInView={animVariants.whileInView}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                  <div className="p-3 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-xl">
-                    <BookOpen className="h-6 w-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight">Professional Journey</h2>
-                </div>
-                <p className="text-base leading-relaxed text-[#334155] dark:text-slate-300 font-light whitespace-pre-wrap">
-                  {journeyText}
-                </p>
-
-                {about.timelines && about.timelines.length > 0 && (
-                  <div className="mt-10 relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] dark:before:via-slate-700 before:to-transparent">
-                    {about.timelines.map((item: any, index: number) => (
-                      <motion.div
-                        key={item._id || index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 }}
-                        className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
-                      >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-slate-800 bg-blue-100 dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:scale-110 transition-transform">
-                          <CheckCircle2 className="h-5 w-5" />
-                        </div>
-
-                        <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-[#F5F7FB] dark:bg-slate-900/50 border border-[#E2E8F0] dark:border-slate-700/50 hover:border-[#2563EB] dark:hover:border-blue-500 rounded-2xl group-hover:-translate-y-1 transition-all duration-300">
-                          <div className="flex justify-between items-start mb-2">
-                            {item.category && (
-                              <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider font-mono rounded bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
-                                {item.category}
-                              </span>
-                            )}
-                            {item.date && (
-                              <span className="flex items-center text-xs text-slate-500 dark:text-slate-400 font-mono">
-                                <Calendar className="h-3.5 w-3.5 mr-1" />
-                                {item.date}
-                              </span>
-                            )}
-                          </div>
-                          <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {item.title}
-                          </h4>
-                          {item.subtitle && (
-                            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 flex items-center flex-wrap gap-2">
-                              {item.subtitle}
-                            </p>
-                          )}
-                          {item.description && (
-                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed whitespace-pre-wrap">
-                              {item.description}
-                            </p>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                )}
-              </motion.section>
-
-              {/* Section 8: Beyond Coding */}
-              <motion.section
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                  <div className="p-3 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl">
-                    <Coffee className="h-6 w-6" />
-                  </div>
-                  <h2 className="text-2xl font-bold tracking-tight">Beyond Coding</h2>
-                </div>
-                <p className="text-base leading-relaxed text-[#334155] dark:text-slate-300 font-light mb-8 whitespace-pre-wrap">
-                  {lifestyleText}
-                </p>
-
-                {/* Image Grid */}
-                {lifestyleImages.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {lifestyleImages.map((src: string, idx: number) => (
-                      <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden group border border-[#E2E8F0] dark:border-slate-700">
-                        <img
-                          src={src}
-                          alt={`Lifestyle image ${idx + 1}`}
-                          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                          <span className="text-white text-xs font-semibold tracking-wider uppercase">Photo</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </motion.section>
-
-              {/* Section 10: Media Gallery */}
-              {about.gallery && about.gallery.length > 0 && (
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-                >
-                  <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                    <div className="p-3 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-xl">
-                      <Camera className="h-6 w-6" />
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-2xl border border-indigo-500/20">
+                      <Cpu className="h-6 w-6" />
                     </div>
-                    <h2 className="text-2xl font-bold tracking-tight">Media Gallery</h2>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      Philosophy
+                    </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {about.gallery.map((media: any, idx: number) => (
-                      <div key={media._id || idx} className="relative group aspect-video rounded-2xl bg-slate-100 dark:bg-slate-900 overflow-hidden shadow-md border border-[#E2E8F0] dark:border-slate-700">
-                        {media.type === 'video' ? (
-                          <iframe
-                            src={media.url}
-                            title={media.caption || 'Video'}
-                            className="w-full h-full border-0"
-                            allowFullScreen
-                          />
-                        ) : (
-                          <img
-                            src={media.url}
-                            alt={media.caption || 'Gallery Image'}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          />
-                        )}
-                        {media.caption && media.type === 'image' && (
-                          <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <p className="text-white text-sm font-medium">{media.caption}</p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </motion.section>
-              )}
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-indigo-500 transition-colors">
+                    Development Philosophy
+                  </h3>
 
-              {/* Section 11: FAQ Accordion */}
-              {about.faqs && about.faqs.length > 0 && (
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-slate-800 p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-                >
-                  <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#E2E8F0] dark:border-slate-700">
-                    <div className="p-3 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-xl">
-                      <MessageCircleQuestion className="h-6 w-6" />
-                    </div>
-                    <h2 className="text-2xl font-bold tracking-tight">Frequently Asked Questions</h2>
-                  </div>
-
-                  <div className="space-y-4">
-                    {about.faqs.map((faq: any, idx: number) => {
-                      const isOpen = openFaq === faq._id || openFaq === idx.toString();
-                      return (
-                        <div key={faq._id || idx} className="border border-[#E2E8F0] dark:border-slate-700 rounded-2xl overflow-hidden bg-[#F5F7FB] dark:bg-slate-900/50">
-                          <button
-                            onClick={() => setOpenFaq(isOpen ? null : (faq._id || idx.toString()))}
-                            className="flex items-center justify-between w-full p-5 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                          >
-                            <span className="font-bold text-slate-900 dark:text-white pr-4">{faq.question}</span>
-                            <ChevronDown className={`h-5 w-5 text-slate-500 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-blue-500' : ''}`} />
-                          </button>
-                          <AnimatePresence>
-                            {isOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                              >
-                                <div className="p-5 pt-0 text-slate-600 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-wrap border-t border-[#E2E8F0] dark:border-slate-700 mt-2 pt-4">
-                                  {faq.answer}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </motion.section>
-              )}
-
-            </div>
-
-            {/* Sidebar */}
-            <div className="lg:col-span-4 space-y-10">
-
-              {/* Social Connect (New) */}
-              {config?.socialLinks && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-                >
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
-                      <Send className="h-5 w-5" />
-                    </div>
-                    <h3 className="text-xl font-bold tracking-tight">Connect With Me</h3>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    {about.basic?.socialLinks?.map((link: any, idx: number) => {
-                      const getPlatformStyles = (platform: string) => {
-                        const p = platform.toLowerCase();
-                        if (p === 'linkedin') return "bg-[#0077b5]/10 hover:bg-[#0077b5]/20 text-[#0077b5] dark:text-[#0077b5]";
-                        if (p === 'twitter') return "bg-[#1DA1F2]/10 hover:bg-[#1DA1F2]/20 text-[#1DA1F2] dark:text-[#1DA1F2]";
-                        if (p === 'youtube') return "bg-[#FF0000]/10 hover:bg-[#FF0000]/20 text-[#FF0000] dark:text-[#FF0000]";
-                        if (p === 'facebook') return "bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] dark:text-[#1877F2]";
-                        if (p === 'instagram') return "bg-[#E1306C]/10 hover:bg-[#E1306C]/20 text-[#E1306C] dark:text-[#E1306C]";
-                        return "bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-white";
-                      };
-
-                      const getIcon = (platform: string) => {
-                        const p = platform.toLowerCase();
-                        if (p === 'github') return <FaGithub className="w-5 h-5" />;
-                        if (p === 'linkedin') return <FaLinkedin className="w-5 h-5" />;
-                        if (p === 'twitter') return <FaTwitter className="w-5 h-5" />;
-                        if (p === 'facebook') return <FaFacebook className="w-5 h-5" />;
-                        if (p === 'medium') return <SiMedium className="w-5 h-5" />;
-                        if (p === 'youtube') return <FaYoutube className="w-5 h-5" />;
-                        if (p === 'instagram') return <FaInstagram className="w-5 h-5" />;
-                        return <FaGlobe className="w-5 h-5" />;
-                      };
-
-                      return (
-                        <a 
-                          key={idx}
-                          href={link.url} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-xl font-semibold transition-colors ${getPlatformStyles(link.platform)}`}
-                        >
-                          {getIcon(link.platform)}
-                          <span>{link.platform}</span>
-                        </a>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Section 7: Current Focus */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-              >
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
-                    <Cpu className="h-5 w-5" />
-                  </div>
-                  <h3 className="text-xl font-bold tracking-tight">Current Focus</h3>
-                </div>
-                <ul className="space-y-3">
-                  {currentFocus.map((focus: string, idx: number) => (
-                    <li key={idx} className="flex items-center p-3.5 bg-[#F5F7FB] dark:bg-slate-900/50 rounded-xl border border-[#E2E8F0] dark:border-slate-700/50 hover:border-[#2563EB] dark:hover:border-blue-500 transition-colors group">
-                      <div className="h-2 w-2 rounded-full bg-[#2563EB] dark:bg-blue-500 mr-3 shrink-0 group-hover:scale-125 transition-transform" />
-                      <span className="text-xs font-semibold text-[#334155] dark:text-slate-300">{focus}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-
-              {/* Hobbies / Interests */}
-              {activities.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-[#E2E8F0] dark:border-slate-700 transition-colors duration-300"
-                >
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2.5 bg-[#EFF6FF] dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
-                      <Compass className="h-5 w-5" />
-                    </div>
-                    <h3 className="text-xl font-bold tracking-tight">Interests</h3>
-                  </div>
-                  <ul className="space-y-3">
-                    {activities.map((activity: string, idx: number) => (
-                      <li key={idx} className="flex items-center p-3.5 bg-[#F5F7FB] dark:bg-slate-900/50 rounded-xl border border-[#E2E8F0] dark:border-slate-700/50 hover:border-[#2563EB] dark:hover:border-blue-500 transition-colors group">
-                        <div className="h-2 w-2 rounded-full bg-[#2563EB] dark:bg-blue-500 mr-3 shrink-0 group-hover:scale-125 transition-transform" />
-                        <span className="text-xs font-semibold text-[#334155] dark:text-slate-300">{activity}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              )}
-
-              {/* Section 9: Collaboration CTA */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-[#2563EB] to-[#1D4ED8] dark:from-blue-600 dark:to-blue-800 p-8 rounded-3xl shadow-lg shadow-blue-500/20 text-white relative overflow-hidden"
-              >
-                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
-                <div className="relative z-10">
-                  <Send className="h-8 w-8 mb-5 text-blue-200" />
-                  <h3 className="text-2xl font-bold mb-3 tracking-tight">Let's Collaborate</h3>
-                  <p className="text-xs text-blue-100 mb-8 font-light leading-relaxed">
-                    I'm always open to discussing new projects, creative ideas or opportunities to build amazing digital experiences.
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {philosophy}
                   </p>
-                  <Link
-                    href="/#contact"
-                    className="flex justify-center w-full bg-white text-[#2563EB] font-bold py-3.5 px-4 rounded-xl hover:bg-slate-50 transition-colors shadow-md hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-                  >
-                    Let's Connect
-                  </Link>
                 </div>
-              </motion.div>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+                  <button
+                    onClick={() => setActiveModalCard({
+                      title: 'Development Philosophy',
+                      category: 'Engineering Standards',
+                      icon: <Cpu className="h-6 w-6 text-indigo-500" />,
+                      content: (
+                        <div className="space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                          <p className="p-5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 text-base font-light">
+                            {philosophy}
+                          </p>
+                        </div>
+                      )
+                    })}
+                    className="w-full py-2.5 px-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-indigo-600 hover:text-white transition-all cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* CARD 3: Core Values */}
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-none flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 group">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-2xl border border-amber-500/20">
+                      <Lightbulb className="h-6 w-6" />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      Principles
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">
+                    Core Values & Quality
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {coreValues.slice(0, 2).join(' • ')}
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+                  <button
+                    onClick={() => setActiveModalCard({
+                      title: 'Core Values & Quality Standards',
+                      category: 'Culture',
+                      icon: <Lightbulb className="h-6 w-6 text-amber-500" />,
+                      content: (
+                        <div className="space-y-3">
+                          {coreValues.map((val: string, idx: number) => (
+                            <div key={idx} className="flex items-start space-x-3 p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
+                              <CheckCircle2 className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+                              <span className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">{val}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    })}
+                    className="w-full py-2.5 px-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-amber-600 hover:text-white transition-all cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* CARD 4: Professional Journey */}
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-none flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 group">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-500/20">
+                      <BookOpen className="h-6 w-6" />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      Timeline
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors">
+                    Professional Journey
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {journeyText}
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+                  <button
+                    onClick={() => setActiveModalCard({
+                      title: 'Professional Journey & Milestones',
+                      category: 'History',
+                      icon: <BookOpen className="h-6 w-6 text-emerald-500" />,
+                      content: (
+                        <div className="space-y-6 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                          <p className="p-5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 font-light">
+                            {journeyText}
+                          </p>
+                          {about.timelines && about.timelines.length > 0 && (
+                            <div className="space-y-3 pt-2">
+                              <h4 className="text-xs font-bold uppercase tracking-wider font-mono text-emerald-500">Milestone History</h4>
+                              <div className="space-y-3">
+                                {about.timelines.map((t: any, idx: number) => (
+                                  <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800">
+                                    <div className="flex justify-between text-xs font-mono text-slate-400 mb-1">
+                                      <span>{t.title}</span>
+                                      <span>{t.date}</span>
+                                    </div>
+                                    <p className="text-xs text-slate-600 dark:text-slate-300">{t.description}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                    className="w-full py-2.5 px-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-emerald-600 hover:text-white transition-all cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* CARD 5: Beyond Coding & Personal Life */}
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-7 border border-slate-200/80 dark:border-slate-800 shadow-lg shadow-slate-200/30 dark:shadow-none flex flex-col justify-between hover:border-purple-500/50 transition-all duration-300 group md:col-span-2 lg:col-span-2">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-2xl border border-purple-500/20">
+                      <Coffee className="h-6 w-6" />
+                    </div>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                      Personal Life
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-purple-500 transition-colors">
+                    Beyond Coding & Interests
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+                    {lifestyleText}
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-6">
+                  <button
+                    onClick={() => setActiveModalCard({
+                      title: 'Beyond Coding & Personal Life',
+                      category: 'Lifestyle',
+                      icon: <Coffee className="h-6 w-6 text-purple-500" />,
+                      content: (
+                        <div className="space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                          <p className="p-5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 font-light">
+                            {lifestyleText}
+                          </p>
+                        </div>
+                      )
+                    })}
+                    className="w-full py-2.5 px-4 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-purple-600 hover:text-white transition-all cursor-pointer"
+                  >
+                    <span>See More</span>
+                    <Sparkles className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
 
             </div>
           </div>
+
+          {/* Section 3: EXCLUSIVE PERSONAL & LIFESTYLE GALLERY */}
+          <section id="personal-gallery" className="pt-8 border-t border-slate-200/80 dark:border-slate-800 space-y-8">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 font-mono text-xs font-bold uppercase tracking-widest">
+                  <Camera className="h-4 w-4" />
+                  <span>Exclusive Personal Vault</span>
+                </div>
+                <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                  Personal & Lifestyle Gallery
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl">
+                  A formal collection of personal moments, travel, workspace setups, and events. Managed directly from the Admin Panel with Privacy Control.
+                </p>
+              </div>
+
+              {/* Category Filter Tabs */}
+              {galleryCategories.length > 1 && (
+                <div className="flex items-center gap-2 flex-wrap bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  {galleryCategories.map((cat: string) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveGalleryTab(cat)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all cursor-pointer ${
+                        activeGalleryTab.toLowerCase() === cat.toLowerCase()
+                          ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                          : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {filteredGallery.map((item: any, idx: number) => {
+                const imgUrl = typeof item === 'string' ? item : item.url || item.image?.url;
+                const caption = typeof item === 'object' ? item.caption || item.title : `Photo ${idx + 1}`;
+                const category = typeof item === 'object' ? item.category : 'Personal';
+                const isProtected = typeof item === 'object' ? item.isProtected : false;
+
+                return (
+                  <motion.div
+                    key={item._id || idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    onClick={() => setSelectedGalleryItem({ url: imgUrl, caption, category, isProtected })}
+                    className="relative group aspect-square rounded-3xl overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl hover:border-indigo-500/50 transition-all duration-300 cursor-pointer"
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={caption}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/30 text-indigo-300 text-[10px] font-extrabold uppercase tracking-wider font-mono border border-indigo-500/30">
+                          {category}
+                        </span>
+                        <Maximize2 className="h-4 w-4 text-white/80" />
+                      </div>
+                      <p className="text-white text-sm font-bold truncate">{caption}</p>
+                    </div>
+
+                    {isProtected && (
+                      <div className="absolute top-3 right-3 p-1.5 bg-amber-500/90 text-white rounded-lg text-[10px] font-bold flex items-center space-x-1 shadow-sm">
+                        <Lock className="h-3 w-3" />
+                        <span>Private</span>
+                      </div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {filteredGallery.length === 0 && (
+              <div className="text-center p-12 bg-white dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-slate-800 space-y-2">
+                <Camera className="h-10 w-10 text-slate-400 mx-auto" />
+                <h4 className="text-sm font-bold text-slate-700 dark:text-slate-300">Gallery Empty</h4>
+                <p className="text-xs text-slate-500">Log into Admin Panel &gt; Media Gallery to add personal photos.</p>
+              </div>
+            )}
+          </section>
+
+          {/* Section 4: Frequently Asked Questions */}
+          {about.faqs && about.faqs.length > 0 && (
+            <section className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl space-y-6">
+              <div className="flex items-center space-x-3 pb-4 border-b border-slate-200 dark:border-slate-800">
+                <div className="p-3 bg-rose-500/10 text-rose-600 dark:text-rose-400 rounded-2xl border border-rose-500/20">
+                  <MessageCircleQuestion className="h-6 w-6" />
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Frequently Asked Questions</h3>
+              </div>
+
+              <div className="space-y-4">
+                {about.faqs.map((faq: any, idx: number) => {
+                  const isOpen = openFaq === (faq._id || idx.toString());
+                  return (
+                    <div key={faq._id || idx} className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-950">
+                      <button
+                        onClick={() => setOpenFaq(isOpen ? null : (faq._id || idx.toString()))}
+                        className="flex items-center justify-between w-full p-5 text-left transition-colors hover:bg-slate-100 dark:hover:bg-slate-900"
+                      >
+                        <span className="font-bold text-slate-900 dark:text-white pr-4 text-sm sm:text-base">{faq.question}</span>
+                        <ChevronDown className={`h-5 w-5 text-slate-400 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180 text-blue-500' : ''}`} />
+                      </button>
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <div className="p-5 pt-0 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-200 dark:border-slate-800 mt-2 pt-4">
+                              {faq.answer}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* Section 5: Collaboration CTA */}
+          <section className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 p-8 sm:p-12 rounded-3xl shadow-2xl text-white relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 text-center md:text-left">
+              <h3 className="text-3xl font-black tracking-tight">Let's Create Something Remarkable</h3>
+              <p className="text-sm text-blue-100 max-w-xl font-light leading-relaxed">
+                Interested in working together or discussing potential project architecture? Get in touch today.
+              </p>
+            </div>
+
+            <Link
+              href="/#contact"
+              className="px-8 py-4 bg-white text-blue-600 font-extrabold rounded-2xl shadow-xl hover:bg-slate-50 transition-all hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
+            >
+              Get In Touch
+            </Link>
+          </section>
+
         </div>
       </main>
 
-      {/* Resume Modal for Main About Page */}
+      {/* --- CARD "SEE MORE" MODAL --- */}
       <AnimatePresence>
-        {isResumeModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        {activeModalCard && (
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative border border-slate-200 dark:border-slate-700"
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-6 max-h-[85vh] flex flex-col"
             >
-              <button 
-                onClick={() => setIsResumeModalOpen(false)}
-                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100 dark:bg-slate-700 rounded-full transition-colors"
-              >
-                <X className="h-4 w-4" />
-              </button>
-              
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileDown className="h-6 w-6" />
+              <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-blue-500/10 text-blue-500 rounded-2xl">
+                    {activeModalCard.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
+                      {activeModalCard.title}
+                    </h3>
+                    <span className="text-[10px] font-extrabold uppercase font-mono tracking-wider text-blue-500">
+                      {activeModalCard.category}
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">রিজিউমি অপশন</h3>
-              </div>
-              
-              <div className="grid grid-cols-1 gap-3">
-                <a 
-                  href={about.basic?.resumeUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={() => setIsResumeModalOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl font-semibold hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors"
+
+                <button
+                  onClick={() => setActiveModalCard(null)}
+                  className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800 rounded-full transition-colors cursor-pointer"
                 >
-                  <Eye className="h-5 w-5" />
-                  <span>দেখুন</span>
-                </a>
-                
-                <a 
-                  href={about.basic?.resumeUrl} 
-                  download 
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex-grow overflow-y-auto pr-2 space-y-4">
+                {activeModalCard.content}
+              </div>
+
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                <button
+                  onClick={() => setActiveModalCard(null)}
+                  className="px-6 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl font-bold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                  Close Window
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* --- LIGHTBOX MODAL FOR PERSONAL GALLERY --- */}
+      <AnimatePresence>
+        {selectedGalleryItem && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-800"
+            >
+              <button
+                onClick={() => setSelectedGalleryItem(null)}
+                className="absolute top-4 right-4 z-10 p-2.5 bg-black/60 text-white rounded-full hover:bg-black transition-colors cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="aspect-video bg-black flex items-center justify-center overflow-hidden">
+                <img
+                  src={selectedGalleryItem.url}
+                  alt={selectedGalleryItem.caption}
+                  className="max-h-[75vh] w-auto object-contain"
+                />
+              </div>
+
+              <div className="p-6 bg-slate-900 flex items-center justify-between text-white">
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase font-mono text-indigo-400 tracking-wider">
+                    {selectedGalleryItem.category}
+                  </span>
+                  <h4 className="text-base font-bold mt-0.5">{selectedGalleryItem.caption}</h4>
+                </div>
+                <a
+                  href={selectedGalleryItem.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setIsResumeModalOpen(false)}
-                  className="flex items-center justify-center space-x-2 w-full py-3 px-4 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl font-semibold shadow-md transition-colors"
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-500 transition-colors"
                 >
-                  <FileDown className="h-5 w-5" />
-                  <span>ডাউনলোড করুন</span>
+                  View Full Image
                 </a>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* --- RESUME MODAL --- */}
+      <AnimatePresence>
+        {isResumeModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-6 max-h-[90vh] flex flex-col"
+            >
+              <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-3 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-2xl border border-blue-500/20">
+                    <FileDown className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">Curriculum Vitae / Resume</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{name} • {title}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setIsResumeModalOpen(false)}
+                  className="p-2.5 text-slate-400 hover:text-slate-600 dark:hover:text-white bg-slate-100 dark:bg-slate-800 rounded-full transition-colors cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex-grow overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 min-h-[350px] sm:min-h-[480px] flex items-center justify-center">
+                {about.basic?.resumeUrl ? (
+                  <iframe
+                    src={about.basic.resumeUrl}
+                    className="w-full h-full min-h-[380px] sm:min-h-[500px] rounded-2xl"
+                    title={`${name} Resume`}
+                  />
+                ) : (
+                  <div className="text-center p-8 space-y-3">
+                    <FileDown className="h-10 w-10 text-amber-500 mx-auto" />
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white">No Resume Uploaded Yet</h4>
+                    <p className="text-xs text-slate-500">Log into Admin Panel &gt; About Basic to attach your resume URL/PDF.</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400">Official document preview.</p>
+
+                {about.basic?.resumeUrl && (
+                  <div className="flex items-center space-x-3">
+                    <a
+                      href={about.basic.resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 rounded-xl font-semibold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs"
+                    >
+                      Fullscreen View
+                    </a>
+
+                    <a
+                      href={about.basic.resumeUrl}
+                      download
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-6 py-2.5 rounded-xl font-bold bg-blue-600 text-white shadow-lg text-xs"
+                    >
+                      Download Resume
+                    </a>
+                  </div>
+                )}
               </div>
             </motion.div>
           </div>

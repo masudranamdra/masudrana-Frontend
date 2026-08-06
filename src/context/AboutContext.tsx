@@ -14,6 +14,7 @@ export interface AboutData {
     vision: string;
     contactEmail: string;
     location: string;
+    availability?: string;
     resumeUrl: string;
     socialLinks: { platform: string; url: string; icon?: string; label?: string }[];
   };
