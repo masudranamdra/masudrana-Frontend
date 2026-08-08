@@ -31,8 +31,14 @@ API.interceptors.response.use(
   (error) => {
     if (error.response) {
       // Server responded with error status
-      // Don't log 401 errors for /auth/me as they are expected when user is not logged in
-      if (!(error.response.status === 401 && error.config?.url?.includes('/auth/me'))) {
+      // Don't log expected 401 errors for auth routes (/auth/login, /auth/me, /auth/register)
+      const isExpectedAuthError = error.response.status === 401 && (
+        error.config?.url?.includes('/auth/me') ||
+        error.config?.url?.includes('/auth/login') ||
+        error.config?.url?.includes('/auth/register')
+      );
+
+      if (!isExpectedAuthError) {
         console.error('API Error Response:', error.response.status, error.response.data);
       }
     } else if (error.request) {

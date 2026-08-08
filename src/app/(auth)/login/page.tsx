@@ -95,10 +95,9 @@ export default function LoginPage() {
         router.push('/dashboard');
       }
     } catch (err: any) {
-      console.error('Login error:', err);
       setErrorMsg(
-        err.response?.data?.message || 
         err.message || 
+        err.response?.data?.message || 
         'Failed to login. Please check your credentials and try again.'
       );
     } finally {

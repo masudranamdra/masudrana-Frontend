@@ -77,9 +77,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return userData;
     } catch (error: any) {
       if (error.response?.data?.message) {
-        throw error;
+        throw new Error(error.response.data.message);
       }
-      throw new Error(error.message || 'Network error. Please check your connection.');
+      throw new Error(error.message || 'Invalid email or password. Please try again.');
     }
   };
 
