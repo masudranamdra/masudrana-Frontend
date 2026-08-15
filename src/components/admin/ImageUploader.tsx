@@ -83,7 +83,7 @@ export default function ImageUploader({ onUploadSuccess, folder = 'portfolio', c
             }`}
           >
             <UploadCloud className="w-3.5 h-3.5" />
-            <span>ছবি আপলোড (File Upload)</span>
+            <span>File Upload</span>
           </button>
           <button
             type="button"
@@ -95,7 +95,7 @@ export default function ImageUploader({ onUploadSuccess, folder = 'portfolio', c
             }`}
           >
             <LinkIcon className="w-3.5 h-3.5" />
-            <span>ছবির লিংক (Image URL)</span>
+            <span>Image URL</span>
           </button>
         </div>
       </div>
@@ -128,7 +128,7 @@ export default function ImageUploader({ onUploadSuccess, folder = 'portfolio', c
                   <UploadCloud className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-indigo-500" />
                 </div>
                 <div className="text-center">
-                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">সরাসরি ডিভাইস থেকে ছবি আপলোড করুন</span>
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">Upload image file directly from your device</span>
                   <span className="text-[11px] text-slate-500 dark:text-slate-400">PNG, JPG, WEBP, GIF (Max 5MB)</span>
                 </div>
               </>
@@ -145,7 +145,7 @@ export default function ImageUploader({ onUploadSuccess, folder = 'portfolio', c
               type="url"
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
-              placeholder="https://images.unsplash.com/photo-... or Cloudinary / Drive link"
+              placeholder="https://images.unsplash.com/photo-... or Cloudinary link"
               className="flex-1 px-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-300 dark:border-white/10 rounded-xl text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-indigo-500"
             />
             <button
@@ -157,7 +157,7 @@ export default function ImageUploader({ onUploadSuccess, folder = 'portfolio', c
             </button>
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            যেকোনো সরাসরি ছবির URL লিংক পেস্ট করে 'Add Link' বাটনে ক্লিক করুন।
+            Paste any direct image URL link and click 'Add Link'.
           </p>
         </form>
       )}

@@ -19,11 +19,11 @@ interface RichTextEditorProps {
 }
 
 export default function RichTextEditor({
-  label = 'Description / বিবরণ',
+  label = 'Description',
   value = '',
   onChange,
   rows = 8,
-  placeholder = 'এখানে আপনার বিস্তারিত প্রজেক্ট বিবরণ লিখুন... (হেডিং, কালার ও প্যারাগ্রাফ স্পেসিং সহ)',
+  placeholder = 'Write detailed description... Press enter to preserve spacing.',
   className = '',
 }: RichTextEditorProps) {
   const [activeMode, setActiveMode] = useState<'editor' | 'split' | 'preview'>('editor');
@@ -118,7 +118,7 @@ export default function RichTextEditor({
             }`}
           >
             <Edit3 className="w-3.5 h-3.5" />
-            <span className="text-[11px] sm:text-xs">এডিটর</span>
+            <span className="text-[11px] sm:text-xs">Editor</span>
           </button>
           
           <button
@@ -132,7 +132,7 @@ export default function RichTextEditor({
             title="Side-by-side Live Split View"
           >
             <Columns className="w-3.5 h-3.5" />
-            <span className="text-xs">স্প্লিট ভিউ (Split)</span>
+            <span className="text-xs">Split View</span>
           </button>
 
           <button
@@ -145,7 +145,7 @@ export default function RichTextEditor({
             }`}
           >
             <Eye className="w-3.5 h-3.5" />
-            <span className="text-[11px] sm:text-xs">প্রিভিউ</span>
+            <span className="text-[11px] sm:text-xs">Preview</span>
           </button>
         </div>
       </div>
@@ -385,7 +385,7 @@ export default function RichTextEditor({
 
             {/* Footer Status Bar */}
             <div className="px-4 py-2 bg-slate-900/60 border-t border-white/5 text-[11px] text-slate-400 flex justify-between items-center">
-              <span className="hidden sm:inline">প্যারাগ্রাফ ও স্পেসিং বজায় রাখতে Enter বাটন চাপুন।</span>
+              <span className="hidden sm:inline">Press Enter to preserve paragraphs and line breaks.</span>
               <span className="font-mono text-indigo-400 font-semibold">{value.length} characters</span>
             </div>
           </div>
@@ -395,14 +395,14 @@ export default function RichTextEditor({
         {(activeMode === 'preview' || activeMode === 'split') && (
           <div className="p-4 sm:p-5 bg-slate-950 overflow-y-auto max-h-[500px] custom-scrollbar space-y-3">
             <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-400 border-b border-white/10 pb-2 flex justify-between items-center">
-              <span>লাইভ আউটপুট প্রিভিউ (Live Preview)</span>
+              <span>Live Output Preview</span>
               <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">Live</span>
             </div>
             
             {value.trim() ? (
               <FormattedText content={value} className="text-sm leading-relaxed" />
             ) : (
-              <p className="text-xs text-slate-500 italic">কোনো বিবরণ লেখা হয়নি। পূর্বে 'এডিটর' ট্যাবে গিয়ে প্রজেক্ট বিবরণ লিখুন।</p>
+              <p className="text-xs text-slate-500 italic">No description entered yet. Switch to Editor tab to add content.</p>
             )}
           </div>
         )}

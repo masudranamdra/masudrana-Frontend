@@ -159,14 +159,14 @@ export default function AboutBasicAdmin() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <DualImageInput
-            label="Profile Image (প্রোফাইল ছবি)"
+            label="Profile Image"
             value={formFields.profileImage.url}
             onChangeUrl={(url) => setFormFields((prev) => ({ ...prev, profileImage: { ...prev.profileImage, url } }))}
             autoUpload={true}
             folder="about"
           />
           <DualImageInput
-            label="Cover Image (কভার ছবি)"
+            label="Cover Image"
             value={formFields.coverImage.url}
             onChangeUrl={(url) => setFormFields((prev) => ({ ...prev, coverImage: { ...prev.coverImage, url } }))}
             autoUpload={true}

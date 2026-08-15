@@ -157,10 +157,10 @@ export default function EditProjectAdminPage() {
           <div>
             <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
               <FolderCode className="w-6 h-6 text-indigo-500" />
-              <span>Edit Project (প্রজেক্ট এডিট করুন)</span>
+              <span>Edit Project</span>
             </h1>
             <p className="text-xs text-slate-400 mt-0.5">
-              প্রজেক্টের কভার ফটো, কেস স্টাডি গ্যালারি, এবং প্রফেশনাল ফরম্যাটেড বিবরণ আপডেট করুন।
+              Update project cover photo, case study gallery, and professional formatted description.
             </p>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function EditProjectAdminPage() {
             ) : (
               <>
                 <Save className="h-4 w-4" />
-                <span>Save Changes (আপডেট করুন)</span>
+                <span>Save Changes</span>
               </>
             )}
           </button>
@@ -200,7 +200,7 @@ export default function EditProjectAdminPage() {
           {/* Title */}
           <div className="space-y-1.5">
             <label htmlFor="projectTitle" className="text-xs font-bold text-slate-300 block">
-              Project Title (প্রজেক্ট শিরোনাম) *
+              Project Title *
             </label>
             <input
               id="projectTitle"
@@ -216,14 +216,14 @@ export default function EditProjectAdminPage() {
           {/* Subtitle */}
           <div className="space-y-1.5">
             <label htmlFor="projectSubtitle" className="text-xs font-bold text-slate-300 block">
-              Subtitle / Tagline (উপ-শিরোনাম English/বাংলা)
+              Subtitle / Tagline
             </label>
             <input
               id="projectSubtitle"
               type="text"
               value={formFields.subtitle}
               onChange={(e) => setFormFields({ ...formFields, subtitle: e.target.value })}
-              placeholder="e.g. ফুল-স্ট্যাক ই-কমার্স ও নলেজ ম্যানেজমেন্ট ওয়েব অ্যাপ্লিকেশন"
+              placeholder="e.g. Full-Stack E-Commerce & Knowledge Vault SaaS Application"
               className="w-full px-4 py-3 bg-slate-950 border border-white/10 focus:border-indigo-500 rounded-2xl text-sm text-white focus:outline-none"
             />
           </div>
@@ -231,7 +231,7 @@ export default function EditProjectAdminPage() {
           {/* Description Editor */}
           <WysiwygEditor
             id="projectDescriptionEditor"
-            label="Project Description (প্রফেশনাল বিবরণ, হেডিং, কালার ও স্পেসিং সহ)"
+            label="Project Description"
             value={formFields.description}
             onChange={(htmlVal) => setFormFields({ ...formFields, description: htmlVal })}
             minHeight="320px"
@@ -239,7 +239,7 @@ export default function EditProjectAdminPage() {
 
           {/* Case Study Gallery Photos */}
           <ProjectGalleryUploader
-            label="Case Study & Gallery Photos (কেস স্টাডি ও প্রজেক্ট গ্যালারি ছবি)"
+            label="Case Study & Gallery Photos"
             images={formFields.gallery.map((g) => (typeof g === 'string' ? g : g.url))}
             onChange={(imgs) => {
               const formatted = imgs.map((url) => ({ url, publicId: '', caption: '' }));
@@ -254,7 +254,7 @@ export default function EditProjectAdminPage() {
           {/* Cover / Homepage Image */}
           <div className="p-5 bg-slate-900/60 rounded-3xl border border-white/10 space-y-4">
             <DualImageInput
-              label="Cover Photo (হোমপেজ ও কার্ডের মূল কভার ছবি) *"
+              label="Cover Photo (Homepage & Card Preview) *"
               value={formFields.image}
               onChangeUrl={(url) => setFormFields({ ...formFields, image: url })}
               fileObject={fileObject}
@@ -269,7 +269,7 @@ export default function EditProjectAdminPage() {
             </h3>
 
             <div className="space-y-1.5">
-              <label htmlFor="projectCategory" className="text-xs font-bold text-slate-300 block">Category (ক্যাটাগরি)</label>
+              <label htmlFor="projectCategory" className="text-xs font-bold text-slate-300 block">Category</label>
               <select
                 id="projectCategory"
                 value={formFields.category}
@@ -286,7 +286,7 @@ export default function EditProjectAdminPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="projectTags" className="text-xs font-bold text-slate-300 block">Tags (ট্যাগসমূহ)</label>
+              <label htmlFor="projectTags" className="text-xs font-bold text-slate-300 block">Tags</label>
               <input
                 id="projectTags"
                 type="text"

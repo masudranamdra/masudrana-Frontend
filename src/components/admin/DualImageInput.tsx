@@ -126,7 +126,7 @@ export default function DualImageInput({
             }`}
           >
             <UploadCloud className="w-3 h-3" />
-            <span>ছবি আপলোড (File)</span>
+            <span>File Upload</span>
           </button>
           <button
             type="button"
@@ -138,7 +138,7 @@ export default function DualImageInput({
             }`}
           >
             <LinkIcon className="w-3 h-3" />
-            <span>ছবির লিংক (URL)</span>
+            <span>Image URL</span>
           </button>
         </div>
       </div>
@@ -172,7 +172,7 @@ export default function DualImageInput({
             ) : (
               <>
                 <UploadCloud className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" />
-                <span>ছবি ফাইল সিলেক্ট করুন (Direct File Upload)</span>
+                <span>Select Image File (Upload)</span>
               </>
             )}
           </button>

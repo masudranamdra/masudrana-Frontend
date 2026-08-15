@@ -21,10 +21,10 @@ interface WysiwygEditorProps {
 
 export default function WysiwygEditor({
   id = 'projectDescriptionEditor',
-  label = 'Project Detailed Description (প্রজেক্ট বিবরণ)',
+  label = 'Project Detailed Description',
   value = '',
   onChange,
-  placeholder = 'এখানে আপনার প্রজেক্টের বিস্তারিত বিবরণ লিখুন... টেক্সট সিলেক্ট করে রঙ পরিবর্তন ও ফরম্যাটিং করুন।',
+  placeholder = 'Write detailed project description... Select text to apply colors and headings.',
   minHeight = '300px',
   className = '',
 }: WysiwygEditorProps) {
@@ -105,7 +105,7 @@ export default function WysiwygEditor({
             }`}
           >
             <Edit3 className="w-3.5 h-3.5" />
-            <span>ভিস্যুয়াল এডিটর</span>
+            <span>Visual Editor</span>
           </button>
 
           <button
@@ -118,7 +118,7 @@ export default function WysiwygEditor({
             }`}
           >
             <Eye className="w-3.5 h-3.5" />
-            <span>লাইভ আউটপুট প্রিভিউ</span>
+            <span>Live Output Preview</span>
           </button>
         </div>
       </div>
@@ -223,7 +223,7 @@ export default function WysiwygEditor({
                 type="button"
                 onClick={() => setShowColorPicker(!showColorPicker)}
                 className="flex items-center gap-1.5 p-1.5 px-2 bg-slate-950 hover:bg-slate-900 text-slate-200 rounded-lg border border-white/10 cursor-pointer min-h-[32px]"
-                title="Select Text Color (যেকোনো কালার নির্বাচন করুন)"
+                title="Select Text Color"
               >
                 <Palette className="w-4 h-4 text-indigo-400" />
                 <span className="w-3.5 h-3.5 rounded-full border border-white/40 shadow-sm" style={{ backgroundColor: customColor }} />
@@ -367,7 +367,7 @@ export default function WysiwygEditor({
 
           {/* Status Bar */}
           <div className="px-4 py-2 bg-slate-900/80 border-t border-white/5 text-[11px] text-slate-400 flex flex-wrap justify-between items-center gap-2">
-            <span>যেকোনো শব্দ সিলেক্ট করে কালার বাটন বা হেডিং বাটনে ক্লিক করলে তা সরাসরি পরিবর্তন হবে।</span>
+            <span>Select any text and click heading or color buttons to format in real time.</span>
             <span className="font-mono text-indigo-400 font-semibold">{value.replace(/<[^>]*>?/gm, '').length} characters</span>
           </div>
         </div>
@@ -375,13 +375,13 @@ export default function WysiwygEditor({
         /* Live Render Preview Tab */
         <div className="p-6 rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-950 min-h-[320px] max-h-[500px] overflow-y-auto custom-scrollbar space-y-4 shadow-lg">
           <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-indigo-400 border-b border-white/10 pb-2 flex justify-between items-center">
-            <span>প্রজেক্ট পেজ ভিজ্যুয়াল আউটপুট (Live Output Preview)</span>
+            <span>Live Output Preview</span>
             <span className="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">Active View</span>
           </div>
           {value.trim() ? (
             <FormattedText content={value} className="text-sm leading-relaxed" />
           ) : (
-            <p className="text-xs text-slate-500 italic">কোনো বিবরণ লেখা হয়নি। পূর্বে 'ভিস্যুয়াল এডিটর' ট্যাবে গিয়ে বিবরণ লিখুন।</p>
+            <p className="text-xs text-slate-500 italic">No description entered yet. Switch to Visual Editor tab to add content.</p>
           )}
         </div>
       )}

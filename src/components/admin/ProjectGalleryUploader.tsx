@@ -12,7 +12,7 @@ interface ProjectGalleryUploaderProps {
 }
 
 export default function ProjectGalleryUploader({
-  label = 'Project Case Study & Gallery Photos (গ্যালারি ও কেস স্টাডি ছবি)',
+  label = 'Project Case Study & Gallery Photos',
   images = [],
   onChange,
   folder = 'projects_gallery',
@@ -71,7 +71,7 @@ export default function ProjectGalleryUploader({
             type="url"
             value={newUrl}
             onChange={(e) => setNewUrl(e.target.value)}
-            placeholder="ছবির ডিরেক্ট URL পেস্ট করুন (e.g. https://...)"
+            placeholder="Paste direct image URL (e.g. https://...)"
             className="flex-1 px-3 py-2 bg-slate-950 border border-white/10 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
           />
           <button
@@ -135,7 +135,7 @@ export default function ProjectGalleryUploader({
         </div>
       ) : (
         <p className="text-[11px] text-slate-500 italic pt-1">
-          কেস স্টাডি বা গ্যালারির জন্য একাধিক ছবির ফাইল আপলোড করুন অথবা ডিরেক্ট ইমেজ লিংক যুক্ত করুন।
+          Upload multiple image files or paste direct image links for the project gallery.
         </p>
       )}
     </div>

@@ -611,17 +611,17 @@ export default function AdminTabRoute() {
                 {/* PROJECTS TAB INPUTS */}
                 {tab === 'projects' && (
                   <>
-                    {renderInput('Project Title (প্রজেক্ট শিরোনাম)', 'title', 'text', 'Next.js SaaS Enterprise Application')}
-                    {renderInput('Subtitle / Tagline (উপ-শিরোনাম English/বাংলা)', 'subtitle', 'text', 'ফুল-স্ট্যাক ই-কমার্স ও পোর্টফোলিও সলিউশন')}
+                    {renderInput('Project Title', 'title', 'text', 'Next.js SaaS Enterprise Application')}
+                    {renderInput('Subtitle / Tagline', 'subtitle', 'text', 'Full-Stack E-Commerce & Portfolio Solution')}
                     
                     <RichTextEditor
-                      label="Project Description (প্রফেশনাল বিবরণ, হেডিং ও ফরম্যাটিং সহ)"
+                      label="Project Description"
                       value={formFields.description || ''}
                       onChange={(val) => setFormFields({ ...formFields, description: val })}
                     />
 
                     <ProjectGalleryUploader
-                      label="Case Study & Gallery Photos (কেস স্টাডি ও প্রজেক্ট গ্যালারি ছবি)"
+                      label="Case Study & Gallery Photos"
                       images={
                         formFields.gallery && formFields.gallery.length > 0
                           ? formFields.gallery.map((g: any) => (typeof g === 'string' ? g : g.url))
