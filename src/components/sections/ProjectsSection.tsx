@@ -7,7 +7,7 @@ import { Project } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, Eye, ArrowRight, FileText, CheckCircle2, LayoutTemplate, Briefcase, Calendar, Globe, Code2, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
 import { ProjectFullPageView } from '../ProjectFullPageView';
-import { FormattedText } from '../FormattedText';
+import { FormattedText, getPlainTextSnippet } from '../FormattedText';
 
 const GithubIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -155,9 +155,9 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                   
                   {/* 3-line description snippet */}
-                  <div className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 leading-relaxed flex-grow font-normal">
-                    <FormattedText content={project.description} />
-                  </div>
+                  <p className="text-slate-600 dark:text-slate-300 text-sm line-clamp-3 leading-relaxed flex-grow font-normal">
+                    {getPlainTextSnippet(project.description, 160)}
+                  </p>
 
                   <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-200 dark:border-slate-800">
                     {project.tags.slice(0, 3).map((tag) => (

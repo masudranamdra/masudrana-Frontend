@@ -7,6 +7,26 @@ interface FormattedTextProps {
   className?: string;
 }
 
+export const getPlainTextSnippet = (content: string = '', maxLength: number = 180): string => {
+  if (!content) return '';
+  let stripped = content
+    .replace(/<[^>]*>?/gm, '')
+    .replace(/\[\/?(color|bg|align)[^\]]*\]/gi, '')
+    .replace(/^#+\s+/gm, '')
+    .replace(/^>\s+/gm, '')
+    .replace(/^[-*]\s+/gm, '')
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/~~(.*?)~~/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  if (stripped.length > maxLength) {
+    return stripped.substring(0, maxLength).trim() + '...';
+  }
+  return stripped;
+};
+
 export const FormattedText: React.FC<FormattedTextProps> = ({ content = '', className = '' }) => {
   if (!content) return null;
 

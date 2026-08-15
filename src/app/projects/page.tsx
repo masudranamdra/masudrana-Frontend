@@ -8,7 +8,7 @@ import { Project } from '../../types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ExternalLink, X, Eye } from 'lucide-react';
 import { ProjectFullPageView } from '../../components/ProjectFullPageView';
-import { FormattedText } from '../../components/FormattedText';
+import { FormattedText, getPlainTextSnippet } from '../../components/FormattedText';
 
 const GithubIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -189,9 +189,9 @@ export default function ProjectsPage() {
                       </div>
                       
                       {/* 3-line description snippet */}
-                      <div className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm line-clamp-3 leading-relaxed flex-grow font-normal">
-                        <FormattedText content={project.description} />
-                      </div>
+                      <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-sm line-clamp-3 leading-relaxed flex-grow font-normal">
+                        {getPlainTextSnippet(project.description, 160)}
+                      </p>
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-1.5 pt-2 border-t border-slate-200 dark:border-slate-800">
