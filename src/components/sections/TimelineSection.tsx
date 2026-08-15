@@ -57,7 +57,7 @@ export const TimelineSection: React.FC = () => {
   };
 
   return (
-    <section id="experience" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="experience" className="relative py-10 sm:py-12 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
       {/* Background decoration */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
@@ -66,13 +66,13 @@ export const TimelineSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#2563EB] dark:text-blue-400 font-mono">Career Snapshot</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight transition-colors duration-300">
             Work & Education
           </h2>
-          <div className="h-1 w-12 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
-          <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm max-w-lg mx-auto pt-2">
+          <div className="h-1 w-10 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
+          <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm max-w-lg mx-auto pt-1">
             A brief look at my professional journey, academic background, and continuous learning.
           </p>
         </div>
@@ -122,16 +122,13 @@ export const TimelineSection: React.FC = () => {
         </div>
 
         {/* View Complete Resume link */}
-        <div className="flex justify-center pt-8">
+        <div className="flex justify-center pt-6 sm:pt-8">
           <Link
             href="/experience"
-            className="group relative inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] rounded-xl font-bold text-xs sm:text-sm overflow-hidden transition-transform hover:scale-[1.01] active:scale-[0.99] shadow-md"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl font-bold bg-white dark:bg-slate-800 text-[#2563EB] dark:text-blue-400 border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-xs sm:text-sm shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">
-              View Complete Resume & History
-              <ArrowRight className="h-5 w-5" />
-            </span>
+            <span>View Complete Resume & History</span>
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 

@@ -103,7 +103,7 @@ export const SkillsSection: React.FC = () => {
   const SelectedIcon = selectedCategory ? (LucideIcons as any)[selectedCategory.icon] || LucideIcons.Code2 : LucideIcons.Code2;
 
   return (
-    <section id="skills" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white overflow-hidden border-t border-b border-[#E2E8F0] dark:border-slate-800 transition-colors duration-300">
+    <section id="skills" className="relative py-10 sm:py-12 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white overflow-hidden border-t border-b border-[#E2E8F0] dark:border-slate-800 transition-colors duration-300">
       
       {/* Decorative Blur Spheres */}
       <div className="absolute top-0 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-300" />
@@ -112,7 +112,7 @@ export const SkillsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <motion.span 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -134,10 +134,10 @@ export const SkillsSection: React.FC = () => {
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Click on any category to view the specialized tools I use.</p>
           <motion.div 
             initial={{ opacity: 0, width: 0 }}
-            whileInView={{ opacity: 1, width: 48 }}
+            whileInView={{ opacity: 1, width: 40 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="h-1 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-2"
+            className="h-1 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto mt-1.5"
           />
         </div>
 

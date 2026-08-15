@@ -46,22 +46,22 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
   return (
     <section
       id="about"
-      className={`relative py-12 sm:py-16 overflow-hidden transition-colors duration-300 bg-[#F5F7FB] dark:bg-[#0F172A]`}
+      className={`relative py-10 sm:py-12 overflow-hidden transition-colors duration-300 bg-[#F5F7FB] dark:bg-[#0F172A]`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Title Area */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest font-mono text-blue-600 dark:text-blue-400">
             About Me
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
             {basic.tagline || 'My Story'}
           </h2>
-          <div className="h-1 w-12 rounded-full mx-auto bg-blue-600 dark:bg-blue-500" />
+          <div className="h-1 w-10 rounded-full mx-auto bg-blue-600 dark:bg-blue-500" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
           {/* Left side: Photo */}
           <div className="lg:col-span-5">
@@ -71,28 +71,28 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 onClick={() => setLightboxImage(basic.profileImage.url)}
-                className="relative rounded-xl overflow-hidden shadow-xl border border-slate-200 dark:border-white/10 group cursor-pointer"
+                className="relative rounded-xl overflow-hidden shadow-md border border-slate-200 dark:border-white/10 group cursor-pointer"
                 title="Click to view full uncropped profile photo"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity" />
                 <img
                   src={basic.profileImage.url}
                   alt={basic.fullName}
-                  className="w-full h-[320px] sm:h-[380px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="w-full h-[300px] sm:h-[350px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
 
                 {/* Name & Title Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent flex flex-col justify-end">
+                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent flex flex-col justify-end">
                   <motion.div
                     initial={{ y: 15, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 }}
                   >
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-0.5">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight mb-0.5">
                       {basic.fullName}
                     </h3>
-                    <p className="text-xs sm:text-sm font-medium text-blue-400">
+                    <p className="text-xs font-medium text-blue-400">
                       {basic.tagline}
                     </p>
                   </motion.div>
@@ -106,14 +106,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
             initial={{ opacity: 0, x: 15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 space-y-5"
+            className="lg:col-span-7 space-y-4"
           >
             {/* Professional Introduction */}
-            <div className="space-y-4">
-              <h3 className="text-3xl font-extrabold text-blue-600 dark:text-blue-400">
+            <div className="space-y-2">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-blue-600 dark:text-blue-400">
                 {basic.fullName}
               </h3>
-              <p className="text-base leading-relaxed text-slate-700 dark:text-slate-300">
+              <p className="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
                 {basic.shortBio || basic.mission}
               </p>
             </div>

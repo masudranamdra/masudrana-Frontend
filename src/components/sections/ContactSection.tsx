@@ -129,7 +129,7 @@ export const ContactSection: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="contact" className="relative py-10 sm:py-12 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       {/* Decorative Glow Elements */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[130px] pointer-events-none transition-colors duration-300" />
       <div className="absolute bottom-0 right-1/4 w-[450px] h-[450px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[110px] pointer-events-none transition-colors duration-300" />
@@ -137,12 +137,12 @@ export const ContactSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <span className="inline-block px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
             Communications Hub
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">Get In Touch</h2>
-          <div className="h-1 w-12 bg-gradient-to-r from-[#2563EB] to-indigo-500 rounded-full mx-auto mt-2" />
+          <div className="h-1 w-10 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch max-w-5xl mx-auto">

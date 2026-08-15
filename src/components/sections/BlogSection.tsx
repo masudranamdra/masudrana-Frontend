@@ -46,7 +46,7 @@ export const BlogSection: React.FC = () => {
   if (blogs.length === 0) return null;
 
   return (
-    <section id="blogs" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="blogs" className="relative py-10 sm:py-12 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       {/* Background decoration */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-300" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
@@ -54,14 +54,14 @@ export const BlogSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <span className="inline-block px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
             Writing & Insights
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">
             Latest Writings
           </h2>
-          <div className="h-1 w-12 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-2" />
+          <div className="h-1 w-10 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
         </div>
 
         {/* Blogs Grid */}
@@ -126,13 +126,13 @@ export const BlogSection: React.FC = () => {
         </div>
 
         {/* Link to dedicated blogs subpage */}
-        <div className="flex justify-center pt-16">
+        <div className="flex justify-center pt-6 sm:pt-8">
           <Link
             href="/blogs"
-            className="group inline-flex items-center space-x-2 px-8 py-4 rounded-2xl font-bold bg-white dark:bg-slate-800 text-[#2563EB] dark:text-blue-400 border border-[#E2E8F0] dark:border-slate-700 hover:bg-[#2563EB] hover:text-white dark:hover:bg-blue-600 dark:hover:text-white hover:border-transparent transition-all duration-300 shadow-lg shadow-slate-200/50 dark:shadow-none"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl font-bold bg-white dark:bg-slate-800 text-[#2563EB] dark:text-blue-400 border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all text-xs sm:text-sm shadow-sm cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
           >
             <span>Browse All Writings</span>
-            <ArrowRight className="h-4.5 w-4.5 transform group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 

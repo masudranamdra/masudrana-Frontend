@@ -64,19 +64,19 @@ export const ProjectsSection: React.FC = () => {
   }
 
   return (
-    <section id="projects" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="projects" className="relative py-10 sm:py-12 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/15 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
       <div className="absolute bottom-1/4 left-0 w-[550px] h-[550px] bg-sky-500/10 dark:bg-sky-500/15 rounded-full blur-[110px] pointer-events-none transition-colors duration-300" />
 
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8 space-y-1.5">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#2563EB] dark:text-blue-400 font-mono">Creative Works</span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight transition-colors duration-300">
             Featured Works
           </h2>
-          <div className="h-1 w-12 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
-          <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm max-w-lg mx-auto pt-2">
+          <div className="h-1 w-10 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
+          <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm max-w-lg mx-auto pt-1">
             Swipe or drag through some of my best projects. Discover how I turn complex problems into elegant, scalable solutions.
           </p>
         </div>
