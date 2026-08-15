@@ -10,6 +10,8 @@ import { SiMedium } from 'react-icons/si';
 import Link from 'next/link';
 import { formatPdfEmbedUrl } from '../../lib/api';
 
+import { ImageLightboxModal } from '../ImageLightboxModal';
+
 interface AboutSectionProps {
   isHomepage?: boolean;
 }
@@ -18,6 +20,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
   const { about, loading: aboutLoading } = useAbout();
   const { config } = useConfig();
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   if (aboutLoading) {
     return (
@@ -67,9 +70,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
+                onClick={() => setLightboxImage(basic.profileImage.url)}
+                className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group cursor-pointer"
+                title="Click to view full uncropped profile photo"
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity" />
                 <img
                   src={basic.profileImage.url}
                   alt={basic.fullName}
@@ -313,6 +318,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
           </div>
         )}
       </AnimatePresence>
+
+      {/* Lightbox Profile Photo Modal */}
+      <ImageLightboxModal
+        isOpen={!!lightboxImage}
+        images={[lightboxImage || '']}
+        title={basic.fullName}
+        onClose={() => setLightboxImage(null)}
+      />
     </section>
   );
 };

@@ -8,6 +8,7 @@ import { Navbar } from '../../../components/Navbar';
 import { Footer } from '../../../components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, X, Eye, Search, Sparkles, Download } from 'lucide-react';
+import { ImageLightboxModal } from '../../../components/ImageLightboxModal';
 import Link from 'next/link';
 
 export default function ImageGalleryPage() {
@@ -177,54 +178,14 @@ export default function ImageGalleryPage() {
         </div>
       </main>
 
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedImage(null)}
-              className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-md"
-            />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="relative bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden max-w-3xl w-full shadow-2xl z-10 p-4"
-            >
-              <div className="flex justify-between items-center mb-4">
-                <div>
-                  <h3 className="text-[#0F172A] font-bold text-lg">{selectedImage.title}</h3>
-                  <p className="text-xs text-[#64748B]">{selectedImage.category}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="p-2 bg-slate-50 border border-[#E2E8F0] text-[#64748B] hover:text-[#0F172A] rounded-xl cursor-pointer animate-none"
-                >
-                  <X className="h-4.5 w-4.5" />
-                </button>
-              </div>
-              
-              <div className="aspect-video bg-[#0F172A] rounded-xl overflow-hidden relative">
-                <img
-                  src={getAssetUrl(selectedImage.url)}
-                  alt={selectedImage.title}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              {selectedImage.description && (
-                <p className="text-[#334155] text-sm mt-4 font-light leading-relaxed">
-                  {selectedImage.description}
-                </p>
-              )}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      {/* Interactive Image Lightbox Modal */}
+      <ImageLightboxModal
+        isOpen={!!selectedImage}
+        images={filteredImages.map((img) => img.url)}
+        currentIndex={filteredImages.findIndex((i) => i._id === selectedImage?._id)}
+        title={selectedImage?.title || ''}
+        onClose={() => setSelectedImage(null)}
+      />
 
       <Footer />
     </div>

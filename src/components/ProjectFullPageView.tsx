@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Project } from '../types';
 import { getAssetUrl } from '../lib/api';
 import { FormattedText } from './FormattedText';
+import { ImageLightboxModal } from './ImageLightboxModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, ArrowLeft, ExternalLink, FileText, 
@@ -32,6 +33,7 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'document' | 'links'>(defaultTab);
   const [selectedLightboxImage, setSelectedLightboxImage] = useState<string | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
 
   // Mobile navbar auto-hide/show on scroll state
@@ -272,11 +274,18 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
             {/* High-Resolution Hero Banner */}
             <div className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none space-y-6">
               
-              <div className="relative aspect-[16/9] sm:aspect-[21/9] bg-slate-950 overflow-hidden">
+              <div
+                onClick={() => {
+                  setSelectedLightboxImage(projectImage);
+                  setLightboxIndex(0);
+                }}
+                className="relative aspect-[16/9] sm:aspect-[21/9] bg-slate-950 overflow-hidden cursor-pointer group"
+                title="Click to view full uncropped image"
+              >
                 <img
                   src={projectImage}
                   alt={project.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent opacity-80" />
                 
@@ -535,34 +544,14 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
           )}
         </div>
 
-        {/* Lightbox Screenshot Zoom Modal */}
-        <AnimatePresence>
-          {selectedLightboxImage && (
-            <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="relative max-w-5xl w-full bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800"
-              >
-                <button
-                  onClick={() => setSelectedLightboxImage(null)}
-                  className="absolute top-4 right-4 z-10 p-2 bg-black/60 text-white rounded-full hover:bg-black transition-colors cursor-pointer"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-
-                <div className="aspect-video bg-black flex items-center justify-center overflow-hidden">
-                  <img
-                    src={selectedLightboxImage}
-                    alt="Full View Screenshot"
-                    className="max-h-[80vh] w-auto object-contain"
-                  />
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+        {/* Interactive Image Lightbox Modal */}
+        <ImageLightboxModal
+          isOpen={!!selectedLightboxImage}
+          images={galleryImages.length > 0 ? galleryImages : [projectImage]}
+          currentIndex={lightboxIndex}
+          title={project.title}
+          onClose={() => setSelectedLightboxImage(null)}
+        />
 
       </motion.div>
     </AnimatePresence>

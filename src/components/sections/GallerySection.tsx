@@ -6,6 +6,7 @@ import { GalleryImage, GalleryVideo } from '../../types';
 import { useAuth } from '../../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Play, Image as ImageIcon, Video as VideoIcon, X, Eye } from 'lucide-react';
+import { ImageLightboxModal } from '../ImageLightboxModal';
 import Link from 'next/link';
 
 export const GallerySection: React.FC = () => {
@@ -259,54 +260,14 @@ export const GallerySection: React.FC = () => {
           )
         )}
 
-        {/* IMAGE PREVIEW MODAL */}
-        <AnimatePresence>
-          {selectedImage && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedImage(null)}
-                className="absolute inset-0 bg-slate-950/90 backdrop-blur-md"
-              />
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="relative bg-slate-900 border border-white/10 rounded-2xl overflow-hidden max-w-3xl w-full shadow-2xl z-10 p-4"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h3 className="text-white font-bold text-lg">{selectedImage.title}</h3>
-                    <p className="text-xs text-slate-400">{selectedImage.category}</p>
-                  </div>
-                  <button
-                    onClick={() => setSelectedImage(null)}
-                    className="p-2 bg-slate-950/65 hover:bg-slate-950 text-slate-400 hover:text-white border border-white/5 rounded-xl cursor-pointer"
-                  >
-                    <X className="h-4.5 w-4.5" />
-                  </button>
-                </div>
-                
-                <div className="aspect-video bg-slate-950 rounded-xl overflow-hidden">
-                  <img
-                    src={getAssetUrl(selectedImage.url)}
-                    alt={selectedImage.title}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-
-                {selectedImage.description && (
-                  <p className="text-slate-300 text-sm mt-4 font-light leading-relaxed">
-                    {selectedImage.description}
-                  </p>
-                )}
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+        {/* FULL IMAGE LIGHTBOX MODAL */}
+        <ImageLightboxModal
+          isOpen={!!selectedImage}
+          images={images.map((img) => img.url)}
+          currentIndex={images.findIndex((i) => i._id === selectedImage?._id)}
+          title={selectedImage?.title || ''}
+          onClose={() => setSelectedImage(null)}
+        />
 
         {/* VIDEO INLINE IFRAME PLAYER MODAL */}
         <AnimatePresence>
