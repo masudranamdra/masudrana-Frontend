@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote, ArrowRight, Plus, X, Loader2, Image as ImageIcon } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import DualImageInput from '../admin/DualImageInput';
 
 export const TestimonialSection: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -23,7 +24,8 @@ export const TestimonialSection: React.FC = () => {
     position: '',
     company: '',
     rating: 5,
-    reviewContent: ''
+    reviewContent: '',
+    avatar: '',
   });
   const [fileObject, setFileObject] = useState<File | null>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -81,11 +83,11 @@ export const TestimonialSection: React.FC = () => {
       formData.append('reviewContent', formFields.reviewContent);
       if (fileObject) {
         formData.append('avatar', fileObject);
+      } else if (formFields.avatar) {
+        formData.append('avatar', formFields.avatar);
       }
 
-      const res = await API.post('/testimonials', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await API.post('/testimonials', formData);
 
       if (res.data && res.data.success) {
         triggerToast('Recommendation submitted successfully! It is now pending admin approval.');
@@ -347,24 +349,14 @@ export const TestimonialSection: React.FC = () => {
                   />
                 </div>
 
-                <div className="space-y-1.5 pt-2">
-                  <label className="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Profile Image (Optional)</label>
-                  <label className="flex flex-col items-center justify-center border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 rounded-xl p-6 cursor-pointer bg-slate-50 dark:bg-slate-800/50 transition-colors">
-                    <ImageIcon className="h-6 w-6 text-slate-400 mb-2" />
-                    <span className="text-xs text-slate-500 font-medium">
-                      {fileObject ? fileObject.name : 'Click to upload your photo'}
-                    </span>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files[0]) {
-                          setFileObject(e.target.files[0]);
-                        }
-                      }}
-                    />
-                  </label>
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <DualImageInput
+                    label="Profile Avatar Image (Optional)"
+                    value={formFields.avatar || ''}
+                    onChangeUrl={(url) => setFormFields({ ...formFields, avatar: url })}
+                    fileObject={fileObject}
+                    onFileSelect={(file) => setFileObject(file)}
+                  />
                 </div>
 
                 <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">

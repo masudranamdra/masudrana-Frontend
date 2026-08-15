@@ -3,9 +3,6 @@ import axios from 'axios';
 const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
   withCredentials: true, // Crucial for cookie transmission
-  headers: {
-    'Content-Type': 'application/json',
-  },
   timeout: 10000, // 10 second timeout
 });
 
@@ -43,8 +40,8 @@ API.interceptors.response.use(
       }
     } else if (error.request) {
       // Request made but no response received
-      console.error('API Network Error:', error.request);
-      console.error('API URL:', process.env.NEXT_PUBLIC_API_URL);
+      const fullUrl = (error.config?.baseURL || '') + (error.config?.url || '');
+      console.error('API Network Error:', error.message || 'No response received from server', fullUrl ? `(${fullUrl})` : '');
     } else {
       // Error in request setup
       console.error('API Setup Error:', error.message);

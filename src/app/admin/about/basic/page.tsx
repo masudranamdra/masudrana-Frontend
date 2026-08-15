@@ -5,6 +5,7 @@ import API from '../../../../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, AlertCircle, Loader2, Save, X, FileText, UploadCloud, Trash2, ExternalLink } from 'lucide-react';
 import { useAbout } from '../../../../context/AboutContext';
+import DualImageInput from '../../../../components/admin/DualImageInput';
 
 export default function AboutBasicAdmin() {
   const { fetchAbout } = useAbout();
@@ -157,26 +158,20 @@ export default function AboutBasicAdmin() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Profile Image URL</label>
-            <input
-              type="text"
-              value={formFields.profileImage.url}
-              onChange={(e) => setFormFields({ ...formFields, profileImage: { ...formFields.profileImage, url: e.target.value } })}
-              className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 focus:border-indigo-500 rounded-xl text-sm text-slate-800 dark:text-slate-200"
-              placeholder="https://..."
-            />
-          </div>
-          <div className="space-y-2">
-            <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Cover Image URL</label>
-            <input
-              type="text"
-              value={formFields.coverImage.url}
-              onChange={(e) => setFormFields({ ...formFields, coverImage: { ...formFields.coverImage, url: e.target.value } })}
-              className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 focus:border-indigo-500 rounded-xl text-sm text-slate-800 dark:text-slate-200"
-              placeholder="https://..."
-            />
-          </div>
+          <DualImageInput
+            label="Profile Image (প্রোফাইল ছবি)"
+            value={formFields.profileImage.url}
+            onChangeUrl={(url) => setFormFields((prev) => ({ ...prev, profileImage: { ...prev.profileImage, url } }))}
+            autoUpload={true}
+            folder="about"
+          />
+          <DualImageInput
+            label="Cover Image (কভার ছবি)"
+            value={formFields.coverImage.url}
+            onChangeUrl={(url) => setFormFields((prev) => ({ ...prev, coverImage: { ...prev.coverImage, url } }))}
+            autoUpload={true}
+            folder="about"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -281,9 +276,7 @@ export default function AboutBasicAdmin() {
                       setIsUploadingResume(true);
                       const formData = new FormData();
                       formData.append('image', file); // API expects upload file field
-                      const res = await API.post('/about/upload', formData, {
-                        headers: { 'Content-Type': 'multipart/form-data' },
-                      });
+                      const res = await API.post('/about/upload', formData);
                       if (res.data?.success && res.data.data?.url) {
                         setFormFields((prev) => ({ ...prev, resumeUrl: res.data.data.url }));
                         triggerToast('Resume uploaded successfully!');

@@ -11,6 +11,9 @@ import {
   PenTool, BookOpen, Image, Video, FileText, Settings, Quote, Search
 } from 'lucide-react';
 import { useConfig } from '../../../context/ConfigContext';
+import DualImageInput from '../../../components/admin/DualImageInput';
+import RichTextEditor from '../../../components/admin/RichTextEditor';
+import ProjectGalleryUploader from '../../../components/admin/ProjectGalleryUploader';
 
 export default function AdminTabRoute() {
   const router = useRouter();
@@ -126,6 +129,15 @@ export default function AdminTabRoute() {
 
   // Prepare form fields when opening add/edit modals
   const openFormModal = (item: any = null) => {
+    if (tab === 'projects') {
+      if (item && item._id) {
+        router.push(`/admin/projects/edit/${item._id}`);
+      } else {
+        router.push('/admin/projects/create');
+      }
+      return;
+    }
+
     setEditItem(item);
     setFileObject(null);
 
@@ -312,7 +324,6 @@ export default function AdminTabRoute() {
       const needsFormObj = ['projects', 'blogs', 'articles', 'testimonials', 'activities', 'gallery-images', 'documents'].includes(tab);
 
       let payload: any;
-      let headers: any = {};
 
       if (needsFormObj) {
         const formData = new FormData();
@@ -333,16 +344,15 @@ export default function AdminTabRoute() {
         }
 
         payload = formData;
-        headers = { 'Content-Type': 'multipart/form-data' };
       } else {
         payload = formFields;
       }
 
       let res;
       if (editItem) {
-        res = await API.put(endpoint, payload, { headers });
+        res = await API.put(endpoint, payload);
       } else {
-        res = await API.post(endpoint, payload, { headers });
+        res = await API.post(endpoint, payload);
       }
 
       if (res.data && res.data.success) {
@@ -601,18 +611,34 @@ export default function AdminTabRoute() {
                 {/* PROJECTS TAB INPUTS */}
                 {tab === 'projects' && (
                   <>
-                    {renderInput('Project Title', 'title', 'text', 'My Portfolio App')}
-                    <div className="space-y-1.5">
-                      <label className="text-slate-400 text-xs font-semibold">Description</label>
-                      <textarea
-                        rows={3}
-                        value={formFields.description || ''}
-                        onChange={(e) => setFormFields({ ...formFields, description: e.target.value })}
-                        className="w-full px-3 py-2 bg-slate-950 border border-white/5 focus:border-indigo-500/50 rounded-xl text-xs text-slate-300 focus:outline-none"
-                      />
-                    </div>
+                    {renderInput('Project Title (প্রজেক্ট শিরোনাম)', 'title', 'text', 'Next.js SaaS Enterprise Application')}
+                    {renderInput('Subtitle / Tagline (উপ-শিরোনাম English/বাংলা)', 'subtitle', 'text', 'ফুল-স্ট্যাক ই-কমার্স ও পোর্টফোলিও সলিউশন')}
+                    
+                    <RichTextEditor
+                      label="Project Description (প্রফেশনাল বিবরণ, হেডিং ও ফরম্যাটিং সহ)"
+                      value={formFields.description || ''}
+                      onChange={(val) => setFormFields({ ...formFields, description: val })}
+                    />
+
+                    <ProjectGalleryUploader
+                      label="Case Study & Gallery Photos (কেস স্টাডি ও প্রজেক্ট গ্যালারি ছবি)"
+                      images={
+                        formFields.gallery && formFields.gallery.length > 0
+                          ? formFields.gallery.map((g: any) => (typeof g === 'string' ? g : g.url))
+                          : (formFields.documentDetails?.images || [])
+                      }
+                      onChange={(imgs) => {
+                        const formattedGallery = imgs.map((url: string) => ({ url, publicId: '', caption: '' }));
+                        setFormFields({
+                          ...formFields,
+                          gallery: formattedGallery,
+                          documentDetails: { ...(formFields.documentDetails || {}), images: imgs }
+                        });
+                      }}
+                    />
+
                     {renderInput('Category', 'category', 'text', 'Frontend / Backend / Full Stack')}
-                    {renderInput('Tags (Comma separated)', 'tags', 'text', 'React, Next.js, Node.js')}
+                    {renderInput('Tags (Comma separated)', 'tags', 'text', 'React, Next.js, Node.js, MongoDB')}
                     {renderInput('GitHub Source Code Link', 'githubLink', 'text', 'https://github.com/profile/repo')}
                     {renderInput('Live Demo Link', 'demoLink', 'text', 'https://demo.com')}
                   </>
@@ -942,23 +968,32 @@ export default function AdminTabRoute() {
                   )}
                 </div>
 
-                {/* File Upload Selector (Conditional) */}
-                {['projects', 'blogs', 'articles', 'testimonials', 'activities', 'gallery-images', 'documents'].includes(tab) && (
-                  <div className="space-y-1.5 border-t border-white/5 pt-4">
-                    <label className="text-slate-400 text-xs font-semibold block">
-                      {tab === 'documents' ? 'Upload File (PDF/PPT/DOC)' : 'Upload Preview Image'}
-                    </label>
-                    <input
-                      type="file"
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files[0]) {
-                          setFileObject(e.target.files[0]);
-                        }
-                      }}
-                      className="w-full text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-950 file:text-indigo-400 file:cursor-pointer"
-                    />
-                  </div>
-                )}
+                {/* Dual Option Image/File Selector (Direct Upload OR Image URL) */}
+                {['projects', 'blogs', 'articles', 'testimonials', 'activities', 'gallery-images', 'documents'].includes(tab) && (() => {
+                  let imgKey = 'image';
+                  let labelText = 'Preview / Feature Image';
+                  if (tab === 'blogs') { imgKey = 'coverImage'; labelText = 'Blog Cover Image'; }
+                  else if (tab === 'articles') { imgKey = 'previewImage'; labelText = 'Article Preview Image'; }
+                  else if (tab === 'testimonials') { imgKey = 'avatar'; labelText = 'Client Avatar Image'; }
+                  else if (tab === 'documents') { imgKey = 'fileUrl'; labelText = 'Document File / Link'; }
+                  else if (tab === 'gallery-images') { imgKey = 'url'; labelText = 'Gallery Image'; }
+
+                  const currentValue = typeof formFields[imgKey] === 'string' 
+                    ? formFields[imgKey] 
+                    : (formFields[imgKey]?.url || '');
+
+                  return (
+                    <div className="space-y-1.5 border-t border-white/5 pt-4">
+                      <DualImageInput
+                        label={labelText}
+                        value={currentValue}
+                        onChangeUrl={(url) => setFormFields({ ...formFields, [imgKey]: url })}
+                        fileObject={fileObject}
+                        onFileSelect={(file) => setFileObject(file)}
+                      />
+                    </div>
+                  );
+                })()}
 
                 {/* Submit buttons */}
                 <div className="flex items-center justify-end space-x-4 pt-6 border-t border-white/5">

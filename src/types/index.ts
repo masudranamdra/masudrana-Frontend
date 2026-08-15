@@ -9,6 +9,7 @@ export interface User {
 export interface Project {
   _id: string;
   title: string;
+  subtitle?: string;
   description: string;
   category: string;
   tags: string[];
@@ -19,6 +20,7 @@ export interface Project {
     url: string;
     publicId?: string;
   };
+  gallery?: Array<{ url: string; publicId?: string; caption?: string }>;
   activities?: string[];
   clientName?: string;
   timeline?: string;

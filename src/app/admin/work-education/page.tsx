@@ -5,6 +5,7 @@ import API, { getAssetUrl } from '../../../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, AlertCircle, Loader2, Plus, Edit, Trash2, Calendar, Image as ImageIcon, Briefcase, GraduationCap, Trophy, Code, Star, BookOpen, Layers, Check, X } from 'lucide-react';
 import { Activity } from '../../../types';
+import DualImageInput from '../../../components/admin/DualImageInput';
 
 export default function WorkEducationAdmin() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -95,10 +96,9 @@ export default function WorkEducationAdmin() {
 
       if (fileObject) formData.append('image', fileObject);
 
-      const headers = { 'Content-Type': 'multipart/form-data' };
       const res = editItem 
-        ? await API.put(endpoint, formData, { headers }) 
-        : await API.post(endpoint, formData, { headers });
+        ? await API.put(endpoint, formData) 
+        : await API.post(endpoint, formData);
 
       if (res.data && res.data.success) {
         triggerToast(`Activity ${editItem ? 'updated' : 'created'} successfully!`);
@@ -355,15 +355,14 @@ export default function WorkEducationAdmin() {
                   )}
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-slate-400 text-xs font-semibold flex justify-between">
-                    <span>Company / Institute / Certificate Logo</span>
-                  </label>
-                  <label className="flex-1 cursor-pointer flex flex-col items-center justify-center border-2 border-dashed border-white/10 hover:border-indigo-500/50 rounded-xl p-6 transition-colors bg-slate-950">
-                    <ImageIcon className="h-8 w-8 text-slate-500 mb-2" />
-                    <span className="text-[10px] text-slate-400 font-mono">{fileObject ? fileObject.name : 'Click to select image file'}</span>
-                    <input type="file" className="hidden" accept="image/*" onChange={(e) => setFileObject(e.target.files?.[0] || null)} />
-                  </label>
+                <div className="space-y-1.5 border-t border-white/5 pt-3">
+                  <DualImageInput
+                    label="Company / Institute Logo / Activity Image"
+                    value={formFields.image || ''}
+                    onChangeUrl={(url) => setFormFields({ ...formFields, image: url })}
+                    fileObject={fileObject}
+                    onFileSelect={(file) => setFileObject(file)}
+                  />
                 </div>
 
                 <div className="flex items-center space-x-6 p-4 bg-slate-950 border border-white/5 rounded-xl">

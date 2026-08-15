@@ -146,6 +146,11 @@ export const ProjectsSection: React.FC = () => {
                     <h3 className="text-slate-900 dark:text-white font-extrabold text-xl sm:text-2xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                       {project.title}
                     </h3>
+                    {project.subtitle && (
+                      <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                        {project.subtitle}
+                      </p>
+                    )}
                   </div>
                   
                   {/* 3-line description snippet */}

@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Project } from '../types';
 import { getAssetUrl } from '../lib/api';
+import { FormattedText } from './FormattedText';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, ArrowLeft, ExternalLink, FileText, 
@@ -78,9 +79,13 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
   if (!project) return null;
 
   const projectImage = getAssetUrl(project.image?.url);
-  const galleryImages = project.documentDetails?.images || [];
+  const rawGallery = [
+    ...(project.gallery ? project.gallery.map((g: any) => (typeof g === 'string' ? g : g.url)) : []),
+    ...(project.documentDetails?.images || [])
+  ].filter(Boolean);
+  const galleryImages = Array.from(new Set(rawGallery));
   const fullDescription = project.description || '';
-  const isDescriptionLong = fullDescription.length > 250;
+  const isDescriptionLong = fullDescription.length > 350;
 
   return (
     <AnimatePresence>
@@ -279,9 +284,16 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
                   <span className="px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] sm:text-xs font-extrabold uppercase font-mono tracking-widest shadow-md">
                     {project.category}
                   </span>
-                  <h1 className="text-xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                    {project.title}
-                  </h1>
+                  <div className="space-y-1">
+                    <h1 className="text-xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight font-sans">
+                      {project.title}
+                    </h1>
+                    {project.subtitle && (
+                      <p className="text-xs sm:text-lg text-indigo-300 font-medium font-sans">
+                        {project.subtitle}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -352,11 +364,11 @@ export const ProjectFullPageView: React.FC<ProjectFullPageViewProps> = ({
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white">Project Summary</h3>
                   
                   <div className="relative">
-                    <p className={`text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 font-normal whitespace-pre-wrap ${
-                      !isSummaryExpanded && isDescriptionLong ? 'line-clamp-6' : ''
+                    <div className={`text-sm sm:text-base leading-relaxed font-normal ${
+                      !isSummaryExpanded && isDescriptionLong ? 'line-clamp-[10]' : ''
                     }`}>
-                      {fullDescription}
-                    </p>
+                      <FormattedText content={fullDescription} />
+                    </div>
 
                     {isDescriptionLong && (
                       <button
