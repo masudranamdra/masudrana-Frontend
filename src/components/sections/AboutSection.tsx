@@ -46,53 +46,53 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
   return (
     <section
       id="about"
-      className={`relative py-24 sm:py-32 overflow-hidden transition-colors duration-300 bg-[#F5F7FB] dark:bg-[#0F172A]`}
+      className={`relative py-12 sm:py-16 overflow-hidden transition-colors duration-300 bg-[#F5F7FB] dark:bg-[#0F172A]`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Title Area */}
-        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest font-mono text-blue-600 dark:text-blue-400">
             About Me
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white">
             {basic.tagline || 'My Story'}
           </h2>
           <div className="h-1 w-12 rounded-full mx-auto bg-blue-600 dark:bg-blue-500" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
 
           {/* Left side: Photo */}
           <div className="lg:col-span-5">
             {basic.profileImage?.url && (
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -15 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 onClick={() => setLightboxImage(basic.profileImage.url)}
-                className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 group cursor-pointer"
+                className="relative rounded-xl overflow-hidden shadow-xl border border-slate-200 dark:border-white/10 group cursor-pointer"
                 title="Click to view full uncropped profile photo"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity" />
                 <img
                   src={basic.profileImage.url}
                   alt={basic.fullName}
-                  className="w-full h-[400px] sm:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-[320px] sm:h-[380px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                 />
 
                 {/* Name & Title Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent flex flex-col justify-end">
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent flex flex-col justify-end">
                   <motion.div
-                    initial={{ y: 20, opacity: 0 }}
+                    initial={{ y: 15, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.1 }}
                   >
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-1">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-0.5">
                       {basic.fullName}
                     </h3>
-                    <p className="text-sm sm:text-base font-medium text-blue-400">
+                    <p className="text-xs sm:text-sm font-medium text-blue-400">
                       {basic.tagline}
                     </p>
                   </motion.div>
@@ -103,10 +103,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ isHomepage = true })
 
           {/* Right side: Texts, Summary & Contact */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 15 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 space-y-8"
+            className="lg:col-span-7 space-y-5"
           >
             {/* Professional Introduction */}
             <div className="space-y-4">

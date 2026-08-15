@@ -111,12 +111,12 @@ export const Navbar: React.FC = () => {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 dark:bg-transparent dark:dark-gradient-header border-b border-[#E2E8F0] dark:border-none py-3.5 shadow-md shadow-slate-100/40 backdrop-blur-md'
-            : 'bg-transparent py-5'
+            ? 'bg-white/95 dark:bg-transparent dark:dark-gradient-header border-b border-[#E2E8F0] dark:border-none py-2 shadow-sm backdrop-blur-md'
+            : 'bg-transparent py-3'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14">
+          <div className="flex items-center justify-between h-11">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 text-[#0F172A] dark:text-white font-extrabold text-xl tracking-wider group shrink-0">
               <span className="bg-gradient-to-r from-[#2563EB] to-[#60A5FA] bg-clip-text text-transparent font-sans">

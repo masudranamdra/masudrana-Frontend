@@ -96,7 +96,7 @@ export const HeroSection: React.FC = () => {
   const avatarImage = config?.avatarUrl || "https://i.ibb.co.com/cX8qjH0V/a588e708-c5fe-4072-a5a7-5dc79c9cef8a.jpg";
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white transition-colors duration-300">
+    <section id="hero" className="relative min-h-[85vh] flex items-center justify-center pt-24 pb-12 sm:pt-32 sm:pb-16 overflow-hidden bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white transition-colors duration-300">
       
       {/* Background soft blur gradient overlays */}
       <div className="absolute top-1/4 left-1/4 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
@@ -106,46 +106,46 @@ export const HeroSection: React.FC = () => {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none opacity-60" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Hero Left Content */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <div className="lg:col-span-7 space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
             >
               {/* Badge */}
-              <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full text-xs font-bold bg-[#EFF6FF] dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 border border-[#DBEAFE] dark:border-blue-800/50 uppercase tracking-wider shadow-sm transition-colors duration-300">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl text-xs font-bold bg-[#EFF6FF] dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 border border-[#DBEAFE] dark:border-blue-800/50 uppercase tracking-wider shadow-sm transition-colors duration-300">
                 <Sparkles className="h-3.5 w-3.5 animate-pulse" />
                 <span>Available For Freelancing</span>
               </div>
               
               {/* Main Heading */}
-              <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.15] text-[#0F172A] dark:text-white transition-colors duration-300">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0F172A] dark:text-white transition-colors duration-300">
                 {config?.heroTitle || 'Building Premium SaaS Platforms & APIs'}
               </h1>
               
               {/* Subheading */}
-              <p className="text-base sm:text-lg md:text-xl text-[#334155] dark:text-slate-300 max-w-2xl font-normal leading-relaxed transition-colors duration-300">
+              <p className="text-xs sm:text-sm md:text-base text-[#334155] dark:text-slate-300 max-w-2xl font-normal leading-relaxed transition-colors duration-300">
                 {config?.heroSubtitle || 'Professional developer building scalable modern applications and backend systems.'}
               </p>
             </motion.div>
 
             {/* CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15 }}
-              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto pt-1"
             >
               <Link
                 href="#contact"
                 onClick={handleScrollToContact}
-                className="flex items-center justify-center space-x-2.5 px-8 py-3.5 rounded-2xl font-bold bg-[#2563EB] hover:bg-[#1D4ED8] dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-lg shadow-blue-500/20 dark:shadow-blue-900/30 hover:scale-[1.02] active:scale-[0.98] transition-all w-full sm:w-auto cursor-pointer"
+                className="flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl font-bold bg-[#2563EB] hover:bg-[#1D4ED8] dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-md shadow-blue-500/20 text-xs sm:text-sm hover:scale-[1.01] active:scale-[0.99] transition-all w-full sm:w-auto cursor-pointer"
               >
-                <Send className="h-4.5 w-4.5" />
+                <Send className="h-4 w-4" />
                 <span>Get In Touch</span>
               </Link>
               
@@ -154,9 +154,9 @@ export const HeroSection: React.FC = () => {
                   href={config.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-2.5 px-8 py-3.5 rounded-2xl font-bold bg-white dark:bg-slate-800 text-[#334155] dark:text-white border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all w-full sm:w-auto"
+                  className="flex items-center justify-center space-x-2 px-6 py-2.5 rounded-xl font-bold bg-white dark:bg-slate-800 text-[#334155] dark:text-white border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-xs sm:text-sm shadow-sm hover:scale-[1.01] active:scale-[0.99] transition-all w-full sm:w-auto"
                 >
-                  <FileDown className="h-4.5 w-4.5 text-[#2563EB] dark:text-blue-400" />
+                  <FileDown className="h-4 w-4 text-[#2563EB] dark:text-blue-400" />
                   <span>View Resume</span>
                 </a>
               )}
@@ -166,8 +166,8 @@ export const HeroSection: React.FC = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex items-center gap-4 pt-4"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-2.5 pt-2"
             >
               {config?.socialLinks &&
                 Object.entries(config.socialLinks).map(([name, url]) => {
@@ -178,9 +178,9 @@ export const HeroSection: React.FC = () => {
                       href={url as string}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 text-[#64748B] dark:text-slate-400 hover:text-[#2563EB] dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 flex items-center justify-center shadow-sm group"
+                      className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 text-[#64748B] dark:text-slate-400 hover:text-[#2563EB] dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 flex items-center justify-center shadow-sm group"
                     >
-                      <SocialIcon name={name} className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+                      <SocialIcon name={name} className="h-4.5 w-4.5 transition-transform duration-300 group-hover:scale-110" />
                     </a>
                   );
                 })}
@@ -188,50 +188,48 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* Hero Right Content - Profile Card and Floating Stats */}
-          <div className="lg:col-span-5 flex justify-center items-center relative mt-10 lg:mt-0">
+          <div className="lg:col-span-5 flex justify-center items-center relative mt-6 lg:mt-0">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1 }}
-              className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[380px] md:h-[380px] rounded-3xl bg-white dark:bg-slate-800 p-3 border border-[#E2E8F0] dark:border-slate-700 shadow-2xl dark:shadow-blue-900/20 group transition-colors duration-300 z-10"
+              transition={{ duration: 0.8 }}
+              className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-[320px] md:h-[320px] rounded-xl bg-white dark:bg-slate-800 p-2.5 border border-[#E2E8F0] dark:border-slate-700 shadow-xl dark:shadow-blue-900/20 group transition-colors duration-300 z-10"
             >
               <img
                 src={avatarImage}
                 alt="Profile Card Avatar"
-                className="w-full h-full object-cover rounded-2xl shadow-inner transition-transform duration-700 group-hover:scale-[1.02]"
+                className="w-full h-full object-cover rounded-lg shadow-inner transition-transform duration-500 group-hover:scale-[1.01]"
               />
 
               {/* Floating Stat 1: Projects Completed */}
               <motion.div
-                className="absolute -top-6 -left-6 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-3.5 shadow-xl flex items-center space-x-3 transition-colors duration-300"
+                className="absolute -top-4 -left-4 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-xl p-2.5 shadow-lg flex items-center space-x-2.5 transition-colors duration-300"
               >
-                <div className="p-2 rounded-xl bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-100 dark:border-green-800/50">
-                  <CheckCircle className="h-5 w-5" />
+                <div className="p-1.5 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-100 dark:border-green-800/50">
+                  <CheckCircle className="h-4 w-4" />
                 </div>
                 <div>
-                  <span className="block text-xs text-[#64748B] dark:text-slate-400 font-mono leading-none">Projects</span>
-                  <span className="block text-sm font-extrabold text-[#0F172A] dark:text-white mt-0.5">80+ Completed</span>
+                  <span className="block text-[10px] text-[#64748B] dark:text-slate-400 font-mono leading-none">Projects</span>
+                  <span className="block text-xs font-extrabold text-[#0F172A] dark:text-white mt-0.5">80+ Completed</span>
                 </div>
               </motion.div>
 
               {/* Floating Stat 2: Experience */}
               <motion.div
-                
-                className="absolute -bottom-6 -right-6 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-3.5 shadow-xl flex items-center space-x-3 transition-colors duration-300"
+                className="absolute -bottom-4 -right-4 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-xl p-2.5 shadow-lg flex items-center space-x-2.5 transition-colors duration-300"
               >
-                <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50">
-                  <Award className="h-5 w-5" />
+                <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50">
+                  <Award className="h-4 w-4" />
                 </div>
                 <div>
-                  <span className="block text-xs text-[#64748B] dark:text-slate-400 font-mono leading-none">Experience</span>
-                  <span className="block text-sm font-extrabold text-[#0F172A] dark:text-white mt-0.5">8+ Years</span>
+                  <span className="block text-[10px] text-[#64748B] dark:text-slate-400 font-mono leading-none">Experience</span>
+                  <span className="block text-xs font-extrabold text-[#0F172A] dark:text-white mt-0.5">8+ Years</span>
                 </div>
               </motion.div>
 
               {/* Floating Stat 3: Clients */}
               <motion.div
-                
-                className="absolute top-1/2 -right-12 -translate-y-1/2 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-2xl p-3 shadow-xl flex items-center space-x-2.5 transition-colors duration-300 hidden sm:flex"
+                className="absolute top-1/2 -right-10 -translate-y-1/2 bg-white dark:bg-slate-800 border border-[#E2E8F0] dark:border-slate-700 rounded-xl p-2.5 shadow-lg flex items-center space-x-2 transition-colors duration-300 hidden sm:flex"
               >
                 <div className="p-1.5 rounded-xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-purple-800/50">
                   <Users className="h-4 w-4" />

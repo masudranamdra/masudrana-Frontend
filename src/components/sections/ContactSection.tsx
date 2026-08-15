@@ -129,7 +129,7 @@ export const ContactSection: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="relative py-32 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="contact" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       {/* Decorative Glow Elements */}
       <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[130px] pointer-events-none transition-colors duration-300" />
       <div className="absolute bottom-0 right-1/4 w-[450px] h-[450px] bg-indigo-500/5 dark:bg-indigo-600/10 rounded-full blur-[110px] pointer-events-none transition-colors duration-300" />
@@ -137,31 +137,31 @@ export const ContactSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+          <span className="inline-block px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
             Communications Hub
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">Get In Touch</h2>
-          <div className="h-1.5 w-16 bg-gradient-to-r from-[#2563EB] to-indigo-500 rounded-full mx-auto mt-4" />
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">Get In Touch</h2>
+          <div className="h-1 w-12 bg-gradient-to-r from-[#2563EB] to-indigo-500 rounded-full mx-auto mt-2" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch max-w-5xl mx-auto">
           {/* Contact Details Column */}
-          <div className="lg:col-span-5 flex flex-col justify-between p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900/60 backdrop-blur-md border border-[#E2E8F0] dark:border-slate-800 shadow-xl shadow-slate-200/40 dark:shadow-none space-y-10 relative overflow-hidden group">
+          <div className="lg:col-span-5 flex flex-col justify-between p-5 sm:p-6 rounded-xl bg-white dark:bg-slate-900/60 backdrop-blur-md border border-[#E2E8F0] dark:border-slate-800 shadow-sm space-y-6 relative overflow-hidden group">
             <div className="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-700 pointer-events-none"></div>
             
-            <div className="space-y-4 relative z-10">
-              <h3 className="text-[#0F172A] dark:text-white font-extrabold text-3xl tracking-tight">Let's connect</h3>
-              <p className="text-[#64748B] dark:text-slate-400 text-sm leading-relaxed font-light">
+            <div className="space-y-2 relative z-10">
+              <h3 className="text-[#0F172A] dark:text-white font-extrabold text-xl sm:text-2xl tracking-tight">Let's connect</h3>
+              <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                 Whether you have a question or just want to say hi, I'll try my best to get back to you!
               </p>
             </div>
 
             {/* Contact details list */}
-            <div className="space-y-6 text-[#334155] dark:text-slate-300 text-sm relative z-10">
-              <div className="flex items-center space-x-4 group/item">
-                <div className="p-3.5 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-2xl shrink-0 border border-blue-100 dark:border-blue-800/30 transition-transform group-hover/item:scale-110 shadow-sm">
-                  <Mail className="h-5 w-5" />
+            <div className="space-y-4 text-[#334155] dark:text-slate-300 text-xs sm:text-sm relative z-10">
+              <div className="flex items-center space-x-3 group/item">
+                <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-lg shrink-0 border border-blue-100 dark:border-blue-800/30 shadow-sm">
+                  <Mail className="h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="text-[#64748B] dark:text-slate-400 text-[10px] uppercase font-bold tracking-wider font-mono">Email</h4>
@@ -171,9 +171,9 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 group/item">
-                <div className="p-3.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 dark:text-emerald-400 rounded-2xl shrink-0 border border-emerald-100 dark:border-emerald-800/30 transition-transform group-hover/item:scale-110 shadow-sm">
-                  <MessageSquare className="h-5 w-5" />
+              <div className="flex items-center space-x-3 group/item">
+                <div className="p-2.5 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-500 dark:text-emerald-400 rounded-lg shrink-0 border border-emerald-100 dark:border-emerald-800/30 shadow-sm">
+                  <MessageSquare className="h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="text-[#64748B] dark:text-slate-400 text-[10px] uppercase font-bold tracking-wider font-mono">WhatsApp</h4>
@@ -183,9 +183,9 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 group/item">
-                <div className="p-3.5 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-2xl shrink-0 border border-blue-100 dark:border-blue-800/30 transition-transform group-hover/item:scale-110 shadow-sm">
-                  <Phone className="h-5 w-5" />
+              <div className="flex items-center space-x-3 group/item">
+                <div className="p-2.5 bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 rounded-lg shrink-0 border border-blue-100 dark:border-blue-800/30 shadow-sm">
+                  <Phone className="h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="text-[#64748B] dark:text-slate-400 text-[10px] uppercase font-bold tracking-wider font-mono">Phone</h4>
@@ -195,9 +195,9 @@ export const ContactSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 group/item">
-                <div className="p-3.5 bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 rounded-2xl shrink-0 border border-rose-100 dark:border-rose-800/30 transition-transform group-hover/item:scale-110 shadow-sm">
-                  <MapPin className="h-5 w-5" />
+              <div className="flex items-center space-x-3 group/item">
+                <div className="p-2.5 bg-rose-50 dark:bg-rose-900/30 text-rose-500 dark:text-rose-400 rounded-lg shrink-0 border border-rose-100 dark:border-rose-800/30 shadow-sm">
+                  <MapPin className="h-4 w-4" />
                 </div>
                 <div>
                   <h4 className="text-[#64748B] dark:text-slate-400 text-[10px] uppercase font-bold tracking-wider font-mono">Address</h4>
@@ -207,16 +207,16 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Social media connections */}
-            <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800 relative z-10">
+            <div className="space-y-3 pt-4 border-t border-slate-100 dark:border-slate-800 relative z-10">
               <h4 className="text-[#64748B] dark:text-slate-400 text-[10px] uppercase font-bold tracking-widest font-mono">Find me on</h4>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2">
                 {socials.map((soc) => (
                   <a
                     key={soc.name}
                     href={soc.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 text-[#64748B] dark:text-slate-400 hover:text-white hover:bg-[#2563EB] dark:hover:bg-blue-600 hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1"
+                    className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 text-[#64748B] dark:text-slate-400 hover:text-white hover:bg-[#2563EB] dark:hover:bg-blue-600 transition-all duration-300 shadow-sm"
                     title={soc.name}
                   >
                     {soc.icon}
@@ -227,112 +227,112 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Form Column */}
-          <div className="lg:col-span-7 p-1 sm:p-1 rounded-[2rem] bg-gradient-to-br from-[#2563EB]/20 to-indigo-500/20 dark:from-blue-500/20 dark:to-indigo-500/20 shadow-2xl relative">
-            <div className="h-full w-full bg-white dark:bg-[#0F172A] rounded-[1.8rem] p-8 sm:p-10 relative overflow-hidden flex flex-col justify-center border border-white/50 dark:border-slate-800/50">
+          <div className="lg:col-span-7 p-0.5 rounded-xl bg-gradient-to-br from-[#2563EB]/20 to-indigo-500/20 dark:from-blue-500/20 dark:to-indigo-500/20 shadow-md relative">
+            <div className="h-full w-full bg-white dark:bg-[#0F172A] rounded-xl p-5 sm:p-6 relative overflow-hidden flex flex-col justify-center border border-slate-200 dark:border-slate-800">
               {/* Background design accents */}
               <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
               <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
 
-              <div className="mb-8 space-y-2 relative z-10 text-center">
-                <h3 className="text-2xl font-extrabold text-[#0F172A] dark:text-white">
+              <div className="mb-4 space-y-1 relative z-10 text-center">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] dark:text-white">
                   Send a Message
                 </h3>
-                <p className="text-[#64748B] dark:text-slate-400 text-sm font-light">
+                <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm font-light">
                   Have an idea, proposal, or question? Send it over instantly.
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 relative z-10">
                 
                 {/* Form Feedback Messages */}
                 {submitSuccess && (
-                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 dark:text-emerald-400 text-sm rounded-xl flex items-center space-x-3">
-                    <CheckCircle2 className="h-5 w-5 shrink-0" />
+                  <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 dark:text-emerald-400 text-xs rounded-xl flex items-center space-x-2">
+                    <CheckCircle2 className="h-4 w-4 shrink-0" />
                     <span>{submitSuccess}</span>
                   </div>
                 )}
                 {submitError && (
-                  <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 dark:text-rose-400 text-sm rounded-xl flex items-center space-x-3">
-                    <AlertCircle className="h-5 w-5 shrink-0" />
+                  <div className="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-500 dark:text-rose-400 text-xs rounded-xl flex items-center space-x-2">
+                    <AlertCircle className="h-4 w-4 shrink-0" />
                     <span>{submitError}</span>
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Name field */}
-                  <div className="space-y-2">
-                    <label className="text-[#64748B] dark:text-slate-400 text-xs font-bold uppercase tracking-wider font-mono ml-1">Your Name</label>
+                  <div className="space-y-1">
+                    <label className="text-[#64748B] dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider font-mono ml-1">Your Name</label>
                     <div className="relative group">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
-                        <User className="h-4.5 w-4.5" />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
+                        <User className="h-4 w-4" />
                       </div>
                       <input
                         type="text"
                         placeholder="John Doe"
                         {...register('name')}
-                        className="w-full pl-12 pr-4 py-3.5 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-2xl text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
+                        className="w-full pl-9 pr-3 py-2 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
                       />
                     </div>
                     {errors.name && (
-                      <span className="text-rose-500 dark:text-rose-400 text-xs ml-1 font-medium">{errors.name.message}</span>
+                      <span className="text-rose-500 dark:text-rose-400 text-[11px] ml-1 font-medium">{errors.name.message}</span>
                     )}
                   </div>
 
                   {/* Email field */}
-                  <div className="space-y-2">
-                    <label className="text-[#64748B] dark:text-slate-400 text-xs font-bold uppercase tracking-wider font-mono ml-1">Your Email</label>
+                  <div className="space-y-1">
+                    <label className="text-[#64748B] dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider font-mono ml-1">Your Email</label>
                     <div className="relative group">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
-                        <Mail className="h-4.5 w-4.5" />
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
+                        <Mail className="h-4 w-4" />
                       </div>
                       <input
                         type="email"
                         placeholder="john@example.com"
                         {...register('email')}
-                        className="w-full pl-12 pr-4 py-3.5 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-2xl text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
+                        className="w-full pl-9 pr-3 py-2 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
                       />
                     </div>
                     {errors.email && (
-                      <span className="text-rose-500 dark:text-rose-400 text-xs ml-1 font-medium">{errors.email.message}</span>
+                      <span className="text-rose-500 dark:text-rose-400 text-[11px] ml-1 font-medium">{errors.email.message}</span>
                     )}
                   </div>
                 </div>
 
                 {/* Subject field */}
-                <div className="space-y-2">
-                  <label className="text-[#64748B] dark:text-slate-400 text-xs font-bold uppercase tracking-wider font-mono ml-1">Subject</label>
+                <div className="space-y-1">
+                  <label className="text-[#64748B] dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider font-mono ml-1">Subject</label>
                   <div className="relative group">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
-                      <FileText className="h-4.5 w-4.5" />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
+                      <FileText className="h-4 w-4" />
                     </div>
                     <input
                       type="text"
                       placeholder="Project proposal"
                       {...register('subject')}
-                      className="w-full pl-12 pr-4 py-3.5 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-2xl text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
+                      className="w-full pl-9 pr-3 py-2 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none transition-all shadow-sm"
                     />
                   </div>
                   {errors.subject && (
-                    <span className="text-rose-500 dark:text-rose-400 text-xs ml-1 font-medium">{errors.subject.message}</span>
+                    <span className="text-rose-500 dark:text-rose-400 text-[11px] ml-1 font-medium">{errors.subject.message}</span>
                   )}
                 </div>
 
                 {/* Message field */}
-                <div className="space-y-2">
-                  <label className="text-[#64748B] dark:text-slate-400 text-xs font-bold uppercase tracking-wider font-mono ml-1">Message</label>
+                <div className="space-y-1">
+                  <label className="text-[#64748B] dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider font-mono ml-1">Message</label>
                   <div className="relative group">
-                    <div className="absolute top-4 left-4 flex items-start pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
-                      <MessageCircle className="h-4.5 w-4.5" />
+                    <div className="absolute top-3 left-3 flex items-start pointer-events-none text-slate-400 dark:text-slate-500 group-focus-within:text-[#2563EB] transition-colors">
+                      <MessageCircle className="h-4 w-4" />
                     </div>
                     <textarea
-                      rows={5}
+                      rows={4}
                       placeholder="Describe your project requirements, timeline, budget..."
                       {...register('message')}
-                      className="w-full pl-12 pr-4 py-4 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-2xl text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none resize-none transition-all shadow-sm custom-scrollbar"
+                      className="w-full pl-9 pr-3 py-2.5 bg-[#F8FAFC] dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 focus:border-[#2563EB] dark:focus:border-blue-500 focus:ring-2 focus:ring-[#2563EB]/20 dark:focus:ring-blue-500/20 rounded-xl text-xs sm:text-sm text-[#0F172A] dark:text-white placeholder-[#94A3B8] dark:placeholder-slate-600 focus:outline-none resize-none transition-all shadow-sm custom-scrollbar"
                     />
                   </div>
                   {errors.message && (
-                    <span className="text-rose-500 dark:text-rose-400 text-xs ml-1 font-medium">{errors.message.message}</span>
+                    <span className="text-rose-500 dark:text-rose-400 text-[11px] ml-1 font-medium">{errors.message.message}</span>
                   )}
                 </div>
 
@@ -340,16 +340,16 @@ export const ContactSection: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center justify-center space-x-2.5 w-full py-4 bg-gradient-to-r from-[#2563EB] to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-70 text-white font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-blue-500/30 cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+                  className="flex items-center justify-center space-x-2 w-full py-2.5 bg-gradient-to-r from-[#2563EB] to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:opacity-70 text-white font-bold rounded-xl transition-all duration-300 shadow-md cursor-pointer text-xs sm:text-sm"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                       <span>Transmitting...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="h-5 w-5" />
+                      <Send className="h-4 w-4" />
                       <span>Send Message</span>
                     </>
                   )}

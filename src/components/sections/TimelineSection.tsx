@@ -57,7 +57,7 @@ export const TimelineSection: React.FC = () => {
   };
 
   return (
-    <section id="experience" className="relative py-32 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="experience" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       
       {/* Background decoration */}
       <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
@@ -66,54 +66,54 @@ export const TimelineSection: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
           <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-[#2563EB] dark:text-blue-400 font-mono">Career Snapshot</span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight transition-colors duration-300">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight transition-colors duration-300">
             Work & Education
           </h2>
           <div className="h-1 w-12 bg-[#2563EB] dark:bg-blue-500 rounded-full mx-auto" />
-          <p className="text-[#64748B] dark:text-slate-400 text-sm max-w-lg mx-auto pt-4">
+          <p className="text-[#64748B] dark:text-slate-400 text-xs sm:text-sm max-w-lg mx-auto pt-2">
             A brief look at my professional journey, academic background, and continuous learning.
           </p>
         </div>
 
         {/* Minimal Timeline List */}
-        <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] dark:before:via-slate-800 before:to-transparent">
+        <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[#E2E8F0] dark:before:via-slate-800 before:to-transparent">
           {previewItems.map((item, index) => (
             <motion.div 
               key={item._id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
               className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
             >
               {/* Icon / Node */}
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white dark:border-[#0F172A] bg-blue-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:scale-110 transition-transform">
+              <div className="flex items-center justify-center w-9 h-9 rounded-full border-2 border-white dark:border-[#0F172A] bg-blue-100 dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:scale-105 transition-transform">
                 {getIcon(item.icon)}
               </div>
               
               {/* Card */}
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 shadow-sm hover:shadow-lg rounded-2xl group-hover:-translate-y-1 transition-all duration-300">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider font-mono rounded bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400">
+              <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2rem)] p-4 sm:p-5 bg-white dark:bg-slate-900 border border-[#E2E8F0] dark:border-slate-800 shadow-sm hover:shadow-md rounded-xl transition-all duration-300">
+                <div className="flex justify-between items-start mb-1.5">
+                  <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider font-mono rounded bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400">
                     {item.category}
                   </span>
-                  <span className="flex items-center text-xs text-slate-500 dark:text-slate-400 font-mono">
+                  <span className="flex items-center text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                     <Calendar className="h-3.5 w-3.5 mr-1" />
                     {item.date}
                   </span>
                 </div>
-                <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {item.title}
                 </h4>
                 {item.companyName || item.instituteName || item.platform ? (
-                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3 flex items-center flex-wrap gap-2">
+                  <p className="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center flex-wrap gap-1.5">
                     {(item.companyName || item.instituteName || item.platform)}
-                    {item.location && <span className="text-xs font-normal text-slate-500 flex items-center"><MapPin className="h-3 w-3 mr-0.5"/> {item.location}</span>}
+                    {item.location && <span className="text-[11px] font-normal text-slate-500 flex items-center"><MapPin className="h-3 w-3 mr-0.5"/> {item.location}</span>}
                   </p>
                 ) : null}
-                <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -122,10 +122,10 @@ export const TimelineSection: React.FC = () => {
         </div>
 
         {/* View Complete Resume link */}
-        <div className="flex justify-center pt-20">
+        <div className="flex justify-center pt-8">
           <Link
             href="/experience"
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] rounded-2xl font-bold text-lg overflow-hidden transition-transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-slate-900/20 dark:shadow-white/10"
+            className="group relative inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] rounded-xl font-bold text-xs sm:text-sm overflow-hidden transition-transform hover:scale-[1.01] active:scale-[0.99] shadow-md"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">

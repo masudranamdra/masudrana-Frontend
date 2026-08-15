@@ -46,7 +46,7 @@ export const BlogSection: React.FC = () => {
   if (blogs.length === 0) return null;
 
   return (
-    <section id="blogs" className="relative py-32 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
+    <section id="blogs" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white border-t border-b border-[#E2E8F0] dark:border-slate-800 overflow-hidden transition-colors duration-300">
       {/* Background decoration */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-300" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none transition-colors duration-300" />
@@ -54,46 +54,46 @@ export const BlogSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
+          <span className="inline-block px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50">
             Writing & Insights
           </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight">
             Latest Writings
           </h2>
-          <div className="h-1.5 w-16 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-4" />
+          <div className="h-1 w-12 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-2" />
         </div>
 
         {/* Blogs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {blogs.slice(0, 3).map((blog, index) => (
             <motion.div
               key={blog._id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="flex flex-col h-full rounded-3xl bg-white dark:bg-slate-900/80 backdrop-blur-md border border-[#E2E8F0] dark:border-slate-800 hover:border-[#2563EB]/50 dark:hover:border-blue-500/50 transition-all duration-300 overflow-hidden shadow-xl shadow-slate-200/40 dark:shadow-none group cursor-pointer"
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              whileHover={{ y: -4 }}
+              className="flex flex-col h-full rounded-xl bg-white dark:bg-slate-900/80 backdrop-blur-md border border-[#E2E8F0] dark:border-slate-800 hover:border-[#2563EB]/50 dark:hover:border-blue-500/50 transition-all duration-300 overflow-hidden shadow-sm dark:shadow-none group cursor-pointer"
               onClick={() => setSelectedBlog(blog)}
             >
               {/* Cover Image */}
-              <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+              <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
                 <img
                   src={getAssetUrl(blog.coverImage?.url)}
                   alt={blog.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out opacity-90 group-hover:opacity-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60" />
                 
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-lg bg-white/20 dark:bg-black/40 backdrop-blur-md text-[10px] font-bold text-white uppercase font-mono tracking-wider border border-white/30 shadow-lg">
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded bg-white/20 dark:bg-black/40 backdrop-blur-md text-[10px] font-bold text-white uppercase font-mono tracking-wider border border-white/30 shadow">
                   {blog.category}
                 </span>
               </div>
 
               {/* Card content info */}
-              <div className="p-6 sm:p-8 flex flex-col flex-grow relative">
+              <div className="p-4 sm:p-5 flex flex-col flex-grow relative space-y-2">
                 {/* Meta details floating above content line */}
-                <div className="flex items-center justify-between text-[#64748B] dark:text-slate-400 text-xs font-mono mb-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div className="flex items-center justify-between text-[#64748B] dark:text-slate-400 text-[11px] font-mono border-b border-slate-100 dark:border-slate-800 pb-2.5">
                   <div className="flex items-center space-x-1.5">
                     <User className="h-3.5 w-3.5 text-[#2563EB] dark:text-blue-400" />
                     <span className="font-semibold text-slate-700 dark:text-slate-300">{blog.author?.username || 'Admin'}</span>
@@ -104,7 +104,7 @@ export const BlogSection: React.FC = () => {
                   </div>
                 </div>
 
-                <h3 className="text-[#0F172A] dark:text-white font-extrabold text-xl line-clamp-2 leading-tight group-hover:text-[#2563EB] dark:group-hover:text-blue-400 transition-colors mb-3">
+                <h3 className="text-[#0F172A] dark:text-white font-extrabold text-base sm:text-lg line-clamp-2 leading-snug group-hover:text-[#2563EB] dark:group-hover:text-blue-400 transition-colors">
                   {blog.title}
                 </h3>
                 

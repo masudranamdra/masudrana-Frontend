@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="relative bg-[#090D1A] dark:bg-transparent dark:dark-gradient-footer text-white border-t border-[#1E293B] dark:border-none pt-24 pb-12 overflow-hidden">
+    <footer className="relative bg-[#090D1A] dark:bg-transparent dark:dark-gradient-footer text-white border-t border-[#1E293B] dark:border-none pt-12 pb-8 overflow-hidden">
       
       {/* Ambient background decoration */}
       <div className="absolute top-0 left-1/4 w-[300px] h-[300px] bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" />
@@ -86,26 +86,25 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Callout Box */}
-        <div className="mb-16 p-8 rounded-3xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1.5 text-center md:text-left">
-            <h3 className="text-lg sm:text-xl font-extrabold text-white flex items-center justify-center md:justify-start gap-2">
-              {/* <Sparkles className="h-5 w-5 text-indigo-400" /> */} 📧
-              <span>Let's Build Something Exceptional</span>
+        <div className="mb-8 p-4 sm:p-5 rounded-xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center md:text-left">
+            <h3 className="text-base sm:text-lg font-extrabold text-white flex items-center justify-center md:justify-start gap-2">
+              📧 <span>Let's Build Something Exceptional</span>
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 font-light">
+            <p className="text-xs sm:text-sm text-slate-400 font-normal">
               Always open to proposals, software engineering contracts, and creative collaborations. 
             </p>
           </div>
           <Link
             href="/#contact"
-            className="inline-flex items-center space-x-2.5 px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/20"
+            className="inline-flex items-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs sm:text-sm rounded-xl transition-all duration-300 shadow-md shrink-0"
           >
             <span>Start a Conversation</span>
             <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-8">
           {/* Logo & Description */}
           <div className="md:col-span-4 space-y-5">
             <Link href="/" className="flex items-center space-x-2 text-white font-extrabold text-2xl tracking-wider">

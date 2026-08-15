@@ -103,7 +103,7 @@ export const SkillsSection: React.FC = () => {
   const SelectedIcon = selectedCategory ? (LucideIcons as any)[selectedCategory.icon] || LucideIcons.Code2 : LucideIcons.Code2;
 
   return (
-    <section id="skills" className="relative py-32 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white overflow-hidden border-t border-b border-[#E2E8F0] dark:border-slate-800 transition-colors duration-300">
+    <section id="skills" className="relative py-12 sm:py-16 bg-[#F5F7FB] dark:bg-[#0F172A] text-[#0F172A] dark:text-white overflow-hidden border-t border-b border-[#E2E8F0] dark:border-slate-800 transition-colors duration-300">
       
       {/* Decorative Blur Spheres */}
       <div className="absolute top-0 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 dark:bg-blue-600/10 rounded-full blur-[120px] pointer-events-none transition-colors duration-300" />
@@ -112,32 +112,32 @@ export const SkillsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Title */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
           <motion.span 
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-[#2563EB] dark:text-blue-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest font-mono border border-blue-100 dark:border-blue-800/50"
           >
             <LucideIcons.Terminal className="h-3.5 w-3.5" />
             My Expertise
           </motion.span>
           <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight"
+            transition={{ delay: 0.05 }}
+            className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] dark:text-white tracking-tight leading-tight"
           >
             Technical Skillset
           </motion.h2>
-          <p className="text-slate-500 dark:text-slate-400 font-light text-sm">Click on any category to view the specialized tools I use.</p>
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Click on any category to view the specialized tools I use.</p>
           <motion.div 
             initial={{ opacity: 0, width: 0 }}
-            whileInView={{ opacity: 1, width: 64 }}
+            whileInView={{ opacity: 1, width: 48 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="h-1.5 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-4"
+            transition={{ delay: 0.1 }}
+            className="h-1 bg-gradient-to-r from-[#2563EB] to-purple-500 rounded-full mx-auto mt-2"
           />
         </div>
 
@@ -146,8 +146,8 @@ export const SkillsSection: React.FC = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
         >
           {skillCategories.map((category) => {
             const CategoryIcon = (LucideIcons as any)[category.icon] || LucideIcons.Code2;
@@ -158,23 +158,23 @@ export const SkillsSection: React.FC = () => {
                 key={category._id}
                 variants={itemVariants}
                 onClick={() => setSelectedCategory(category)}
-                className={`group cursor-pointer relative flex flex-col p-8 rounded-3xl bg-white dark:bg-slate-900/50 border border-[#E2E8F0] dark:border-slate-800/60 shadow-xl shadow-slate-200/40 dark:shadow-none hover:shadow-2xl hover:shadow-slate-300/40 dark:hover:shadow-blue-900/20 backdrop-blur-sm transition-all duration-500 overflow-hidden hover:-translate-y-2`}
+                className={`group cursor-pointer relative flex flex-col p-4 sm:p-5 rounded-xl bg-white dark:bg-slate-900/50 border border-[#E2E8F0] dark:border-slate-800 shadow-sm hover:shadow-md backdrop-blur-sm transition-all duration-300 overflow-hidden hover:-translate-y-1`}
               >
                 {/* Gradient Hover Effect overlay */}
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 bg-gradient-to-br ${theme.gradient} transition-opacity duration-500`} />
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 bg-gradient-to-br ${theme.gradient} transition-opacity duration-300`} />
                 
                 {/* Category Header */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-4 rounded-2xl ${theme.bgLight} ${theme.bgDark} ${theme.textColor} border ${theme.borderLight} ${theme.borderDark} group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
-                      <CategoryIcon className="h-8 w-8" />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2.5 rounded-lg ${theme.bgLight} ${theme.bgDark} ${theme.textColor} border ${theme.borderLight} ${theme.borderDark} group-hover:scale-105 transition-transform duration-300`}>
+                      <CategoryIcon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white leading-tight">
+                    <h3 className="text-base sm:text-lg font-extrabold text-slate-800 dark:text-white leading-tight">
                       {category.title}
                     </h3>
                   </div>
-                  <div className={`p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-slate-50 dark:bg-slate-800 text-slate-400`}>
-                    <LucideIcons.ArrowRight className="h-4 w-4" />
+                  <div className={`p-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-slate-50 dark:bg-slate-800 text-slate-400`}>
+                    <LucideIcons.ArrowRight className="h-3.5 w-3.5" />
                   </div>
                 </div>
 

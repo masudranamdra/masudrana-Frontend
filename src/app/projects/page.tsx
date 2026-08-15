@@ -57,7 +57,7 @@ export default function ProjectsPage() {
     <div className="min-h-screen flex flex-col bg-[#F5F7FB] text-[#0F172A]">
       <Navbar />
 
-      <main className="flex-grow pt-32 pb-24 relative overflow-hidden">
+      <main className="flex-grow pt-24 pb-16 relative overflow-hidden">
         {/* Decorative glows */}
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-1/4 left-0 w-[550px] h-[550px] bg-sky-500/5 rounded-full blur-[110px] pointer-events-none" />
@@ -65,26 +65,26 @@ export default function ProjectsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Page Title */}
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 space-y-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-[#2563EB] font-mono">Creative Portfolio</span>
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-[#0F172A] tracking-tight">Featured Works</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">Featured Works</h1>
             <div className="h-1 w-12 bg-[#2563EB] rounded-full mx-auto" />
-            <p className="text-slate-500 text-sm max-w-lg mx-auto font-light leading-relaxed">
+            <p className="text-slate-500 text-xs sm:text-sm max-w-lg mx-auto font-normal leading-relaxed">
               Explore my architectural layouts, interactive SaaS platforms, and advanced API designs.
             </p>
           </div>
 
           {/* Filter and Search Bar */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12 bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-sm">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-white p-3 rounded-xl border border-[#E2E8F0] shadow-sm">
             {/* Tabs */}
-            <div className="flex items-center space-x-2 overflow-x-auto pb-2 w-full md:w-auto no-scrollbar">
+            <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 w-full md:w-auto no-scrollbar">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveTab(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 whitespace-nowrap border cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 whitespace-nowrap border cursor-pointer ${
                     activeTab === cat
-                      ? 'bg-[#2563EB] border-[#2563EB] text-white shadow-md shadow-blue-500/15'
+                      ? 'bg-[#2563EB] border-[#2563EB] text-white shadow-sm'
                       : 'bg-white border-[#E2E8F0] text-[#64748B] hover:text-[#0F172A] hover:bg-slate-50'
                   }`}
                 >
@@ -94,68 +94,68 @@ export default function ProjectsPage() {
             </div>
 
             {/* Search Input */}
-            <div className="relative w-full md:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-[#64748B]" />
+            <div className="relative w-full md:w-72">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#64748B]" />
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-[#E2E8F0] rounded-xl text-sm text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:border-[#2563EB]/50 focus:ring-1 focus:ring-[#2563EB]/50 transition-all duration-300"
+                className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-[#E2E8F0] rounded-lg text-xs sm:text-sm text-[#0F172A] placeholder-[#64748B] focus:outline-none focus:border-[#2563EB]/50 transition-all duration-200"
               />
             </div>
           </div>
 
           {/* Project Grid */}
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               {[1, 2, 3, 4, 5, 6].map((n) => (
-                <div key={n} className="h-80 bg-white border border-[#E2E8F0] animate-pulse rounded-2xl" />
+                <div key={n} className="h-72 bg-white border border-[#E2E8F0] animate-pulse rounded-xl" />
               ))}
             </div>
           ) : filteredProjects.length === 0 ? (
-            <div className="text-center py-20 text-slate-500 text-sm italic">
+            <div className="text-center py-16 text-slate-500 text-xs sm:text-sm italic">
               No projects found matching the criteria.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
               <AnimatePresence mode="popLayout">
                 {filteredProjects.map((project, index) => (
                   <motion.div
                     key={project._id}
                     layout
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
-                    whileHover={{ y: -5 }}
-                    className="group rounded-2xl bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full hover:border-[#2563EB]/30 transition-all duration-300 shadow-md shadow-slate-100/40 hover:shadow-lg"
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    whileHover={{ y: -3 }}
+                    className="group rounded-xl bg-white border border-[#E2E8F0] overflow-hidden flex flex-col h-full hover:border-[#2563EB]/30 transition-all duration-300 shadow-sm hover:shadow-md"
                   >
                     {/* Card Image Cover */}
                     <div className="relative aspect-video overflow-hidden bg-slate-950">
                       <img
                         src={getAssetUrl(project.image?.url)}
                         alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Hover Overlays */}
-                      <div className="absolute inset-0 bg-[#0F172A]/80 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 transition-opacity duration-300">
+                      <div className="absolute inset-0 bg-[#0F172A]/80 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2.5 transition-opacity duration-300">
                         <button
                           onClick={() => setSelectedProject(project)}
-                          className="p-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl shadow-lg transition-transform hover:scale-110 cursor-pointer"
+                          className="p-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg shadow transition-transform hover:scale-105 cursor-pointer"
                           title="View Details"
                         >
-                          <Eye className="h-5 w-5" />
+                          <Eye className="h-4.5 w-4.5" />
                         </button>
                         {project.githubLink && (
                           <a
                             href={project.githubLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition-transform hover:scale-110 flex items-center justify-center"
+                            className="p-2.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-transform hover:scale-105 flex items-center justify-center"
                             title="GitHub Code"
                           >
-                            <GithubIcon className="h-5 w-5" />
+                            <GithubIcon className="h-4.5 w-4.5" />
                           </a>
                         )}
                         {project.demoLink && (
@@ -163,17 +163,17 @@ export default function ProjectsPage() {
                             href={project.demoLink}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl transition-transform hover:scale-110"
+                            className="p-2.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg transition-transform hover:scale-105"
                             title="Live Demo"
                           >
-                            <ExternalLink className="h-5 w-5" />
+                            <ExternalLink className="h-4.5 w-4.5" />
                           </a>
                         )}
                       </div>
                     </div>
 
                     {/* Card Info */}
-                    <div className="p-6 flex flex-col flex-grow space-y-4">
+                    <div className="p-4 sm:p-5 flex flex-col flex-grow space-y-3">
                       <div className="space-y-1">
                         <span className="text-[10px] font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase font-mono">
                           {project.category}
