@@ -195,6 +195,7 @@ export const Navbar: React.FC = () => {
                 onClick={toggleDarkMode}
                 className="p-2.5 rounded-xl bg-slate-50 border border-[#E2E8F0] text-amber-500 hover:bg-slate-100 transition-colors shadow-sm flex items-center justify-center cursor-pointer dark:bg-slate-800 dark:border-slate-700" 
                 title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
                 {isDark ? (
                   <Sun className="h-4.5 w-4.5 text-amber-400" />
@@ -210,6 +211,7 @@ export const Navbar: React.FC = () => {
                     <Link
                       href="/admin"
                       className="flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#EFF6FF] text-[#2563EB] border border-[#DBEAFE] hover:bg-[#2563EB] hover:text-white transition-all duration-200"
+                      aria-label="Open Admin Control Panel"
                     >
                       <Shield className="h-3.5 w-3.5" />
                       <span>Admin</span>
@@ -218,6 +220,7 @@ export const Navbar: React.FC = () => {
                   <Link
                     href="/dashboard"
                     className="flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#F8FAFC] dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-[#E2E8F0] dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-200"
+                    aria-label="Open Client Dashboard"
                   >
                     <LayoutDashboard className="h-3.5 w-3.5 text-[#2563EB]" />
                     <span>Dashboard</span>
@@ -226,6 +229,7 @@ export const Navbar: React.FC = () => {
                     onClick={() => logout().then(() => router.push('/'))}
                     className="p-2 bg-rose-50 text-rose-600 border border-rose-100 hover:bg-rose-600 hover:text-white rounded-xl transition-all duration-200 cursor-pointer"
                     title="Log Out"
+                    aria-label="Log Out"
                   >
                     <LogOut className="h-4 w-4" />
                   </button>
@@ -234,6 +238,7 @@ export const Navbar: React.FC = () => {
                 <button
                   onClick={handleGetStartedClick}
                   className="inline-flex items-center space-x-1.5 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#2563EB] hover:bg-blue-600 text-white shadow-md shadow-blue-500/20 hover:shadow-blue-500/35 transition-all duration-300 cursor-pointer"
+                  aria-label="Get Started"
                 >
                   <User className="h-4 w-4" />
                   <span>Get Started</span>
@@ -246,12 +251,14 @@ export const Navbar: React.FC = () => {
               <button 
                 onClick={toggleDarkMode}
                 className="p-2 rounded-lg bg-slate-50 border border-[#E2E8F0] text-amber-500 cursor-pointer dark:bg-slate-800 dark:border-slate-700"
+                aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
                 {isDark ? <Sun className="h-4.5 w-4.5 text-amber-400" /> : <Moon className="h-4.5 w-4.5 text-indigo-500" />}
               </button>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 rounded-lg bg-slate-50 border border-[#E2E8F0] text-slate-600 cursor-pointer dark:bg-slate-800 dark:border-slate-700"
+                aria-label={isOpen ? "Close main navigation menu" : "Open main navigation menu"}
               >
                 {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>

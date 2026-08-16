@@ -197,7 +197,9 @@ export const HeroSection: React.FC = () => {
             >
               <img
                 src={avatarImage}
-                alt="Profile Card Avatar"
+                alt="Masud Rana - Senior Full Stack Software Engineer (masudranamdra, masuddev01)"
+                width={320}
+                height={320}
                 className="w-full h-full object-cover rounded-lg shadow-inner transition-transform duration-500 group-hover:scale-[1.01]"
               />
 
